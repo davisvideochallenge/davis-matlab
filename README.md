@@ -8,10 +8,10 @@ Package containing the Matlab implementation of the code behind:
 
 Code Installation
 -----------------
-1) Adapt the value of `db_root_dir.m` to point to the root dir where DAVIS
+1. Adapt the value of `db_root_dir.m` to point to the root dir where DAVIS
    is uncompressed in your system (contains folder `480p`)
-2) Run the script `startup.m` to add the necessary paths and perform some checks.
-3) [If necessary] Recompile using the script `build.m` in case the startup
+2. Run the script `startup.m` to add the necessary paths and perform some checks.
+3. [If necessary] Recompile using the script `build.m` in case the startup
    script detects some files missing.
 
 
