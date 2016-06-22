@@ -1,10 +1,10 @@
 
-Disclaimer
+Introduction
 --------------
-Package containing the *Matlab* implementation of the code behind:
+Package containing the **Matlab** implementation of the code behind:
 *A Benchmark Dataset and Evaluation Methodology for Video Object Segmentation*
 [DAVIS](https://graphics.ethz.ch/~perazzif/davis/index.html).
-You can find the Python implementation [here](https://github.com/fperazzi/davis).
+You can find the **Python** implementation [here](https://github.com/fperazzi/davis).
 
 
 Code Installation
