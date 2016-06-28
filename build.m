@@ -11,7 +11,7 @@
 % ------------------------------------------------------------------------
 % Rebuild the DAVIS package and dependencies
 % ------------------------------------------------------------------------
-mex measures/private/mex_match_dijkstra.cpp -I/opt/local/include/ -Ithird-party -o measures/private/mex_match_dijkstra
+mex measures/private/mex_match_dijkstra.cpp -I/opt/local/include/ -Ithird-party -outdir measures/private/
 
 cd third-party
 run matlab_build.m
