@@ -10,7 +10,7 @@ You can find the **Python** implementation [here](https://github.com/fperazzi/da
 Code Installation
 -----------------
 1. Adapt the value of `db_root_dir.m` to point to the root dir where DAVIS
-   is uncompressed in your system (contains folder `480p`)
+   is uncompressed in your system (contains folders `Annotations` and `JPEGImages`)
 2. Run the script `startup.m` to add the necessary paths and perform some checks.
 3. [If necessary] Recompile using the script `build.m` in case the startup
    script detects some files missing.
