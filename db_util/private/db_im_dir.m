@@ -10,5 +10,5 @@
 % Please consider citing the paper if you use this code.
 % ------------------------------------------------------------------------
 function im_dir = db_im_dir()
-    im_dir = fullfile(db_root_dir,db_im_size,'sequences');
+    im_dir = fullfile(db_root_dir,'JPEGImages',db_im_size);
 end
