@@ -10,7 +10,11 @@
 % Please consider citing the paper if you use this code.
 % ------------------------------------------------------------------------
 function result = db_read_result(seq_id, frame_id, result_id)
-    result = imread(fullfile(db_results_dir, result_id, seq_id, [frame_id '.png']));
+    res_file = fullfile(db_results_dir, result_id, seq_id, [frame_id '.png']);
+    if ~exist(res_file,'file')
+        error(['Error: ''' res_file ''' not found, have you downloaded the DAVIS results from the project website?'])
+    end
+    result = imread(res_file);
     assert(size(result,3)==1)
     assert(all(ismember(unique(result),[0,255])))
     result = (result>0);

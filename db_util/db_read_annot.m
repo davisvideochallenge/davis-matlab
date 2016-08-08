@@ -10,7 +10,11 @@
 % Please consider citing the paper if you use this code.
 % ------------------------------------------------------------------------
 function annot = db_read_annot(seq_id, frame_id)
-    annot = imread(fullfile(db_annot_dir, seq_id, [frame_id '.png']));
+    annot_file = fullfile(db_annot_dir, seq_id, [frame_id '.png']);
+    if ~exist(annot_file,'file')
+        error(['Error: ''' annot_file ''' not found, have you downloaded the DAVIS database from the project website?'])
+    end
+    annot = imread(annot_file);
     assert(size(annot,3)==1)
     assert(all(ismember(unique(annot),[0,255])))
     annot = (annot>0);

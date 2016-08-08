@@ -13,5 +13,5 @@
 % ------------------------------------------------------------------------
 
 function root_dir = db_root_dir()
-    root_dir = '/srv/glusterfs/jpont/gt_dbs/VOSB/data/';
+    root_dir = '/Users/jpont/Workspace/gt_dbs/DAVIS/';
 end

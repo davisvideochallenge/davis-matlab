@@ -10,5 +10,9 @@
 % Please consider citing the paper if you use this code.
 % ------------------------------------------------------------------------
 function image = db_read_image(seq_id, frame_id)
-    image = imread(fullfile(db_im_dir, seq_id, [frame_id '.jpg']));
+    im_file = fullfile(db_im_dir, seq_id, [frame_id '.jpg']);
+    if ~exist(im_file,'file')
+        error(['Error: ''' im_file ''' not found, have you downloaded the DAVIS database from the project website?'])
+    end
+    image = imread(im_file);
 end

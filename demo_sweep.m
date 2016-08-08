@@ -16,7 +16,7 @@
 addpath(fullfile(db_matlab_root_dir,'db_util'));
 
 % Name of a result technique
-result_id = 'fastvideoseg';
+result_id = 'fcp';
 
 % Get the ids of all sequences
 seq_ids = db_seqs();
@@ -29,7 +29,7 @@ for s_id = 1:length(seq_ids)
     fprintf('%s',seq_ids{s_id});
     
     % Sweep all frames
-    for f_id = 1:length(frame_ids)
+    for f_id = 2:length(frame_ids)-1
         fprintf('.');
 
         % Read the original image

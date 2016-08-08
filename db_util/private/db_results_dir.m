@@ -10,5 +10,5 @@
 % Please consider citing the paper if you use this code.
 % ------------------------------------------------------------------------
 function obj_dir = db_results_dir()
-    obj_dir = fullfile(db_root_dir,db_im_size,'results');
+    obj_dir = fullfile(db_root_dir,'Results','Segmentations',db_im_size);
 end

@@ -30,5 +30,10 @@ end
 clear needed_files;
 clear ii;
 
+% Check db_root_dir
+if ~exist(db_root_dir,'dir')
+    error(['Error: ''db_root_dir'' (' db_root_dir ') not found, did you set it correctly to the folder where DAVIS is found?'])
+end
+
 % Display message
-disp('DAVIS Matlab Packages started correctly. Enjoy!')
+disp('DAVIS Matlab Package started correctly. Enjoy!')

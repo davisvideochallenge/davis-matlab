@@ -17,5 +17,8 @@ function frame_ids = db_frame_ids( seq_id )
         frame_ids{ii} = strrep(frame_ids{ii},'.jpg','');
     end
     
+    if isempty(frame_ids)
+        error(['Error: Nothing found in ''' fullfile(db_im_dir,seq_id) '''. Did you download DAVIs and set the paths correctly?'])
+    end
 end
 
