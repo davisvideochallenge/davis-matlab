@@ -11,8 +11,15 @@
 % ------------------------------------------------------------------------
 % Rebuild the DAVIS package and dependencies
 % ------------------------------------------------------------------------
-mex measures/private/mex_match_dijkstra.cpp -I/opt/local/include/ -Ithird-party -outdir measures/private/
 
+if (strcmp(computer(),'PCWIN64') || strcmp(computer(),'PCWIN32'))
+    %  Change the path to Boost libraries if necessary
+    mex measures/private/mex_match_dijkstra.cpp -I'C:\Program Files\boost_1_55_0' -Ithird-party -outdir measures/private/; 
+else
+    mex measures/private/mex_match_dijkstra.cpp -I/opt/local/include/  -Ithird-party -outdir measures/private/
+end
+
+% Build third party
 cd third-party
 run matlab_build.m
 cd ..
