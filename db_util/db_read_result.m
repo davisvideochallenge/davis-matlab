@@ -16,6 +16,6 @@ function result = db_read_result(seq_id, frame_id, result_id)
     end
     result = imread(res_file);
     assert(size(result,3)==1)
-    assert(all(ismember(unique(result),[0,255])))
+    assert(all(ismember(unique(result),[0,255])) || all(ismember(unique(result),[0,1])))
     result = (result>0);
 end

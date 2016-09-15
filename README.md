@@ -29,8 +29,8 @@ Code Usage
 
 Evaluate your technique
 -----------------
-- Add your results in the folder `results`, as the provided precomputed results,
-  in a folder `my_method`
+- Add your results in the folder `$root_DAVIS\Results\Segmentations\480p`,
+  as the provided precomputed results, in a folder `my_method`
 - Run `measures/eval_result.m` on your technique: `eval_result('my_method',{'J','F','T'})`.
   (You can select which measures to use - You can skip T for fast computation)
 - Show your results as in `experiments\global_table.m`
