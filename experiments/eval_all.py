@@ -27,7 +27,7 @@ gt_set    = sys.argv[3]
 
 # Run the actual code
 os.chdir('/srv/glusterfs/jpont/dev/davis-matlab')
-command_to_run = "/usr/sepp/bin/matlab -nodesktop -nodisplay -nosplash -r \"startup;eval_result('"+technique+"','"+measures+"','"+gt_set+"');exit\""
+command_to_run = "/usr/sepp/bin/matlab -nodesktop -nodisplay -nosplash -r \"startup;eval_result('"+technique+"',"+measures+",'"+gt_set+"');exit\""
 os.system(command_to_run)
 
 
