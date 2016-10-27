@@ -9,7 +9,7 @@
 %   CVPR 2016
 % Please consider citing the paper if you use this code.
 % ------------------------------------------------------------------------
-function [eval, raw_eval] = eval_result(result_id, measures)
+function [eval, raw_eval] = eval_result(result_id, measures, gt_set)
 
 % Pre-computed evaluations are stored here
 eval_folder = fullfile(db_matlab_root_dir,'eval_results');
@@ -31,7 +31,7 @@ end
 %% Compute the raw evaluation or load it from file
 to_recompute = {};
 for ii=1:length(measures)
-    res_file = fullfile(eval_folder, [result_id '_' measures{ii} '.mat']);
+    res_file = fullfile(eval_folder, [result_id '_' measures{ii} '_' gt_set '.mat']);
     if exist(res_file,'file')
         raw_eval.(measures{ii}) = loadvar(res_file,'raw_ev');
         disp(['LOADED: ' res_file])
@@ -42,16 +42,16 @@ end
 
 if ~isempty(to_recompute)
     for ii=1:length(to_recompute)
-        res_file = fullfile(eval_folder, [result_id '_' to_recompute{ii} '.mat']);
+        res_file = fullfile(eval_folder, [result_id '_' measures{ii} '_' gt_set '.mat']);
         disp(['RECOMPUTING: ' res_file])
     end
     
     % Compute them all in one pass, not to read things twice
-    sel_eval = recompute_raw_eval(result_id, to_recompute);
+    sel_eval = recompute_raw_eval(result_id, to_recompute, gt_set);
     
     % Separate each measure and save them independently
     for ii=1:length(to_recompute)
-        res_file = fullfile(eval_folder, [result_id '_' to_recompute{ii} '.mat']);
+        res_file = fullfile(eval_folder, [result_id '_' measures{ii} '_' gt_set '.mat']);
         disp(['SAVING: ' res_file])
 
         raw_ev = sel_eval(ii,:);
@@ -66,7 +66,7 @@ end
 %% Get per-seq mean quality, decay, and recall
 
 % Get the ids of all sequences
-seq_ids = db_seqs();
+seq_ids = db_seqs(gt_set);
 
 % Allocate
 if ismember('F',measures)
@@ -94,7 +94,7 @@ end
 for s_id = 1:length(seq_ids)
 
     % F for boundaries
-    if ismember('F',measures);
+    if ismember('F',measures)
         curr_F = raw_eval.F{s_id};
         assert(~all(isnan(curr_F)));
         
@@ -107,7 +107,7 @@ for s_id = 1:length(seq_ids)
     end
     
     % Jaccard
-    if ismember('J',measures);
+    if ismember('J',measures)
         curr_J = raw_eval.J{s_id};
         
         eval.J.mean(s_id)   = mean(curr_J);
@@ -119,7 +119,7 @@ for s_id = 1:length(seq_ids)
     end
     
     % Temporal stability
-    if ismember('T',measures);
+    if ismember('T',measures)
         curr_T = raw_eval.T{s_id};
         eval.T.mean(s_id)   = 5*nanmean(curr_T); % NaN mean to erase NaN from empty masks
                                                  % Multiply by 5 to put it in a similar
@@ -133,9 +133,9 @@ end
 
 
 
-function [eval, seq_ids] = recompute_raw_eval(result_id, measures)
+function [eval, seq_ids] = recompute_raw_eval(result_id, measures, gt_set)
     % Get the ids of all sequences
-    seq_ids = db_seqs();
+    seq_ids = db_seqs(gt_set);
 
     % Allocate
     eval = cell(length(measures),length(seq_ids));

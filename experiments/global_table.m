@@ -16,17 +16,20 @@
 % Get the parameters
 experiments_params();
 
+% Which set of the ground truth use
+gt_set = 'val';
+
 %% Evaluate them or load pre-computed evaluation
 F = cell(1,length(techniques));
 J = cell(1,length(techniques));
 T = cell(1,length(techniques));
 for ii=1:length(techniques)
-    eval = eval_result(techniques{ii},{'F','J','T'});
+    eval = eval_result(techniques{ii},{'F','J'},gt_set);
     F{ii} = eval.F;
     J{ii} = eval.J;
     T{ii} = eval.T;
 end
-eval = eval_result('gt','T');
+eval = eval_result('gt','T',gt_set);
 Tgt  = eval.T;
 
 %% Put them in a single matrix
@@ -52,7 +55,7 @@ end
 clc
 disp(repmat('=',[1,142]))
 fprintf('\t\t');
-for ii=1:length(techniques), fprintf('%s\t',techniques_paper{ii}), end; fprintf('\n');
+for ii=1:length(techniques), fprintf('%s\t',techniques{ii}), end; fprintf('\n');
 disp(repmat('-',[1,142]))
 fprintf('J mean  \t');fprintf('%0.3f\t',mean(all_J.mean,2)'); fprintf('\n');
 fprintf('J recall\t');fprintf('%0.3f\t',mean(all_J.recall,2)'); fprintf('\n');
@@ -153,7 +156,7 @@ for ii=1:length(techniques)
     glob_eval.(id).Fdecay     = sprintf('%0.3f',mean(all_F.decay(ii,:)));
     glob_eval.(id).T          = sprintf('%0.3f',mean(all_T.mean(ii,stab_seqs)));
 end
-savejson('',glob_eval,'global_eval.js');
+savejson('',glob_eval,['global_eval_' gt_set '.js']);
 
     
 %% Show all means
@@ -161,6 +164,6 @@ savejson('',glob_eval,'global_eval.js');
 % plot(all_T.mean')
 % hold on
 % plot(Tgt.mean,'k--');
-% legend([techniques_paper(:); 'GT'])
+% legend([techniques(:); 'GT'])
 
 

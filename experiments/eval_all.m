@@ -11,7 +11,7 @@
 % ------------------------------------------------------------------------
 % Evaluate all techniques in parallel
 % ------------------------------------------------------------------------
-function eval_all(measures)
+function eval_all(measures, gt_set)
 
 if nargin==0
     error('Parameter ''measures'' not defined')
@@ -23,7 +23,7 @@ experiments_params();
 % Evaluate in parallel
 p = parpool();
 parfor ii=1:length(techniques) %#ok<USENS>
-    eval_result(techniques{ii},measures);  %#ok<PFIIN>
+    eval_result(techniques{ii},measures,gt_set);  %#ok<PFIIN>
 end
 delete(p);
 
