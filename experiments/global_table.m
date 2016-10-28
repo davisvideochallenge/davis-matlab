@@ -17,7 +17,7 @@
 experiments_params();
 
 % Which set of the ground truth use
-gt_set = 'all';
+gt_set = 'val';
 [db_seq_list, stab_seqs]= db_seqs(gt_set);
 
 %% Evaluate them or load pre-computed evaluation
@@ -146,7 +146,7 @@ disp(repmat('=',[1,142]))
 
 %% Export in JSON for web
 glob_eval.Tgt        = sprintf('%0.3f',mean(Tgt.mean(stab_seqs)));
-glob_eval.techniques = techniques;
+glob_eval.techniques = strrep(techniques,'-','');
 for ii=1:length(techniques) 
     id = strrep(techniques{ii},'-','');
     glob_eval.(id).Jmean      = sprintf('%0.3f',mean(all_J.mean(ii,:)));
@@ -158,7 +158,7 @@ for ii=1:length(techniques)
     glob_eval.(id).T          = sprintf('%0.3f',mean(all_T.mean(ii,stab_seqs)));
 end
 savejson('',glob_eval,['global_eval_' gt_set '.js']);
-
+% REMEMBER: Add 'var global_eval_val = '
     
 %% Show all means
 % figure;
