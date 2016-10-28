@@ -3,7 +3,7 @@
 # ----- Parameters passed to the cluster -------
 #$ -S /usr/bin/python
 #$ -l h_rt=5:59:00
-#$ -l h_vmem=5000M
+#$ -l h_vmem=30000M
 #$ -o /scratch_net/neo/jpont/logs/
 #$ -j y
 
