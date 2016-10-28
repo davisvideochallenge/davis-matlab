@@ -25,7 +25,4 @@ techniques_paper = {'MCG','SF-LAB','SF-MOT',...
                     'TSP','SEA','HVS','JMP','FCP','BVS'};
 
 % Output folder to save files
-paper_data = '~/tmp';
-                
-% List of 27 sequences where stability is computed (no occlusions, etc.)
-stab_seqs = setdiff(1:50,[4 5 9 11 13 15 16 22 24 25 26 27 28 29 31 32 33 34 37 40 44 45 48]);         
+paper_data = '~/tmp';       

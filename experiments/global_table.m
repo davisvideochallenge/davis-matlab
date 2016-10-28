@@ -17,14 +17,15 @@
 experiments_params();
 
 % Which set of the ground truth use
-gt_set = 'val';
+gt_set = 'all';
+[db_seq_list, stab_seqs]= db_seqs(gt_set);
 
 %% Evaluate them or load pre-computed evaluation
 F = cell(1,length(techniques));
 J = cell(1,length(techniques));
 T = cell(1,length(techniques));
 for ii=1:length(techniques)
-    eval = eval_result(techniques{ii},{'F','J'},gt_set);
+    eval = eval_result(techniques{ii},{'F','J','T'},gt_set);
     F{ii} = eval.F;
     J{ii} = eval.J;
     T{ii} = eval.T;

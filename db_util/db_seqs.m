@@ -9,7 +9,7 @@
 %   CVPR 2016
 % Please consider citing the paper if you use this code.
 % ------------------------------------------------------------------------
-function db_seq_list = db_seqs(subset)
+function [db_seq_list, stab_seqs]= db_seqs(subset)
 
 if ~exist('subset','var')
     subset = 'all';
@@ -97,7 +97,7 @@ elseif strcmp(subset,'train')
                     'swing'
                     'tennis'
                     'train'};
-elseif strcmp(subset,'val'),
+elseif strcmp(subset,'val')
      db_seq_list = {'blackswan'
                     'bmx-trees'
                     'breakdance'
@@ -119,5 +119,15 @@ elseif strcmp(subset,'val'),
                     'scooter-black'
                     'soapbox'};
 end
+
+
+if nargout>1
+    % List of sequences where stability is not computed (occlusions, etc.)
+    unstab_seqs = {'lucia', 'rollerblade', 'mallard-fly', 'bmx-bumps', 'goat', 'scooter-gray', 'bmx-trees', 'dance-twirl', 'motocross-jump', 'soccerball', 'breakdance', 'dog', 'horsejump-high', 'motorbike', 'breakdance-flare', 'dog-agility', 'horsejump-low', 'paragliding', 'drift-chicane', 'swing','parkour','tennis','libby'};
+    
+    % Find the stable ones
+    stab_seqs = setdiff(1:length(db_seq_list),find(ismember(db_seq_list,unstab_seqs)));
+end
+  
 
 end
