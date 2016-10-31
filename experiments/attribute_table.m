@@ -22,7 +22,7 @@ non_prep_paper = techniques_paper(4:end);
 
 J = cell(1,length(non_prep_tech));
 for ii=1:length(non_prep_tech)
-    eval = eval_result(non_prep_tech{ii},'J');
+    eval = eval_result(non_prep_tech{ii},'J','all');
     J{ii} = eval.J;
 end
 
