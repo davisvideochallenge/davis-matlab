@@ -15,6 +15,9 @@
 % Get the parameters
 experiments_params();
 
+% Set of sequences (train, val, all)
+gt_set = 'all';
+
 %% Evaluate them or load pre-computed evaluation
 % Remove the preprocessing techniques
 non_prep_tech = techniques(4:end);
@@ -22,7 +25,7 @@ non_prep_paper = techniques_paper(4:end);
 
 J = cell(1,length(non_prep_tech));
 for ii=1:length(non_prep_tech)
-    eval = eval_result(non_prep_tech{ii},'J','all');
+    eval = eval_result(non_prep_tech{ii},'J',gt_set);
     J{ii} = eval.J;
 end
 
@@ -40,7 +43,7 @@ end
 all_attr      = zeros(length(db.attr_names),length(non_prep_tech));
 all_atrr_diff = zeros(length(db.attr_names),length(non_prep_tech));
 for ii=1:length(db.attr_names)
-   sel_seq = ismember(db.seq_names, db.attr_seq(db.attr_names{ii}));
+   sel_seq = ismember(db_seqs(gt_set), db.attr_seq(db.attr_names{ii}));
    
    all_attr(ii,:)      = mean(all_J(sel_seq,:));
    all_atrr_diff(ii,:) = mean(all_J(~sel_seq,:))-all_attr(ii,:);
@@ -49,6 +52,7 @@ end
 
 %% Display evaluation table
 which_att = [14 7 4 8 10];
+% which_att = 1:15;
 
 clc
 disp(repmat('=',[1,212]))
@@ -87,6 +91,7 @@ for ii=1:length(which_att)
     end
     
     % Sweep all columns
+    assert(length(non_prep_tech)==length(max_groups));
     for jj=1:length(non_prep_tech)
         if all_atrr_diff(which_att(ii),jj)<0, sp = ''; else sp = '+'; end
         if ismember(jj,max_ids), bf = '\bf'; else bf = '   '; end

@@ -17,7 +17,7 @@
 experiments_params();
 
 % Which set of the ground truth use
-gt_set = 'val';
+gt_set = 'all';
 [db_seq_list, stab_seqs]= db_seqs(gt_set);
 
 %% Evaluate them or load pre-computed evaluation
