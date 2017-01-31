@@ -145,20 +145,20 @@ disp(repmat('=',[1,150]))
 % disp('% ------ End of Matlab-generated LaTeX code ------')
 
 %% Export in JSON for web
-glob_eval.Tgt        = sprintf('%0.3f',mean(Tgt.mean(stab_seqs)));
-glob_eval.techniques = strrep(techniques,'-','');
-for ii=1:length(techniques) 
-    id = strrep(techniques{ii},'-','');
-    glob_eval.(id).Jmean      = sprintf('%0.3f',mean(all_J.mean(ii,:)));
-    glob_eval.(id).Jrecall    = sprintf('%0.3f',mean(all_J.recall(ii,:)));
-    glob_eval.(id).Jdecay     = sprintf('%0.3f',mean(all_J.decay(ii,:)));
-    glob_eval.(id).Fmean      = sprintf('%0.3f',mean(all_F.mean(ii,:)));
-    glob_eval.(id).Frecall    = sprintf('%0.3f',mean(all_F.recall(ii,:)));
-    glob_eval.(id).Fdecay     = sprintf('%0.3f',mean(all_F.decay(ii,:)));
-    glob_eval.(id).T          = sprintf('%0.3f',mean(all_T.mean(ii,stab_seqs)));
-end
-savejson('',glob_eval,['global_eval_' gt_set '.js']);
-% REMEMBER: Add 'var global_eval_val = '
+% glob_eval.Tgt        = sprintf('%0.3f',mean(Tgt.mean(stab_seqs)));
+% glob_eval.techniques = strrep(techniques,'-','');
+% for ii=1:length(techniques) 
+%     id = strrep(techniques{ii},'-','');
+%     glob_eval.(id).Jmean      = sprintf('%0.3f',mean(all_J.mean(ii,:)));
+%     glob_eval.(id).Jrecall    = sprintf('%0.3f',mean(all_J.recall(ii,:)));
+%     glob_eval.(id).Jdecay     = sprintf('%0.3f',mean(all_J.decay(ii,:)));
+%     glob_eval.(id).Fmean      = sprintf('%0.3f',mean(all_F.mean(ii,:)));
+%     glob_eval.(id).Frecall    = sprintf('%0.3f',mean(all_F.recall(ii,:)));
+%     glob_eval.(id).Fdecay     = sprintf('%0.3f',mean(all_F.decay(ii,:)));
+%     glob_eval.(id).T          = sprintf('%0.3f',mean(all_T.mean(ii,stab_seqs)));
+% end
+% savejson('',glob_eval,['global_eval_' gt_set '.js']);
+% % REMEMBER: Add 'var global_eval_val = '
 
 
 %% Show all means
