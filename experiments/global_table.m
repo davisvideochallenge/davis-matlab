@@ -17,7 +17,7 @@
 experiments_params();
 
 % Which set of the ground truth use
-gt_set = 'all';
+gt_set = 'train';
 [db_seq_list, stab_seqs]= db_seqs(gt_set);
 
 %% Evaluate them or load pre-computed evaluation
@@ -54,20 +54,20 @@ end
 
 %% Display evaluation table
 clc
-disp(repmat('=',[1,142]))
+disp(repmat('=',[1,150]))
 fprintf('\t\t');
 for ii=1:length(techniques), fprintf('%s\t',techniques{ii}), end; fprintf('\n');
-disp(repmat('-',[1,142]))
+disp(repmat('-',[1,150]))
 fprintf('J mean  \t');fprintf('%0.3f\t',mean(all_J.mean,2)'); fprintf('\n');
 fprintf('J recall\t');fprintf('%0.3f\t',mean(all_J.recall,2)'); fprintf('\n');
 fprintf('J decay \t');fprintf('%0.3f\t',mean(all_J.decay,2)'); fprintf('\n');
-disp(repmat('-',[1,142]))
+disp(repmat('-',[1,150]))
 fprintf('F mean  \t');fprintf('%0.3f\t',mean(all_F.mean,2)'); fprintf('\n');
 fprintf('F recall\t');fprintf('%0.3f\t',mean(all_F.recall,2)'); fprintf('\n');
 fprintf('F decay \t');fprintf('%0.3f\t',mean(all_F.decay,2)'); fprintf('\n');
-disp(repmat('-',[1,142]))
+disp(repmat('-',[1,150]))
 fprintf('T (GT %0.3f)\t',mean(Tgt.mean(stab_seqs)));fprintf('%0.3f\t',mean(all_T.mean(:,stab_seqs),2)'); fprintf('\n');
-disp(repmat('=',[1,142]))
+disp(repmat('=',[1,150]))
 
 
 %% Display evaluation table (in LaTeX)
@@ -159,7 +159,8 @@ for ii=1:length(techniques)
 end
 savejson('',glob_eval,['global_eval_' gt_set '.js']);
 % REMEMBER: Add 'var global_eval_val = '
-    
+
+
 %% Show all means
 % figure;
 % plot(all_T.mean')
