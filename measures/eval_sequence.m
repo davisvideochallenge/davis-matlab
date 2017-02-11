@@ -66,7 +66,7 @@ function eval = eval_sequence(mask_res_in,seq_name,measures)
         if ism, eval_tmp{pos}(f_id-1) = t_stability(last_result, mask_res{f_id-1}); end
 
         % Keep last result
-        last_result = mask_res_in;
+        last_result = mask_res{f_id-1};
     end
     fprintf('\n');
     % F for boundaries
