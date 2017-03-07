@@ -17,7 +17,7 @@
 experiments_params();
 
 % Which set of the ground truth use
-gt_set = 'train';
+gt_set = 'val';
 [db_seq_list, stab_seqs]= db_seqs(gt_set);
 
 %% Evaluate them or load pre-computed evaluation
@@ -54,20 +54,20 @@ end
 
 %% Display evaluation table
 clc
-disp(repmat('=',[1,150]))
+disp(repmat('=',[1,165]))
 fprintf('\t\t');
 for ii=1:length(techniques), fprintf('%s\t',techniques{ii}), end; fprintf('\n');
-disp(repmat('-',[1,150]))
+disp(repmat('-',[1,165]))
 fprintf('J mean  \t');fprintf('%0.3f\t',mean(all_J.mean,2)'); fprintf('\n');
 fprintf('J recall\t');fprintf('%0.3f\t',mean(all_J.recall,2)'); fprintf('\n');
 fprintf('J decay \t');fprintf('%0.3f\t',mean(all_J.decay,2)'); fprintf('\n');
-disp(repmat('-',[1,150]))
+disp(repmat('-',[1,165]))
 fprintf('F mean  \t');fprintf('%0.3f\t',mean(all_F.mean,2)'); fprintf('\n');
 fprintf('F recall\t');fprintf('%0.3f\t',mean(all_F.recall,2)'); fprintf('\n');
 fprintf('F decay \t');fprintf('%0.3f\t',mean(all_F.decay,2)'); fprintf('\n');
-disp(repmat('-',[1,150]))
+disp(repmat('-',[1,165]))
 fprintf('T (GT %0.3f)\t',mean(Tgt.mean(stab_seqs)));fprintf('%0.3f\t',mean(all_T.mean(:,stab_seqs),2)'); fprintf('\n');
-disp(repmat('=',[1,150]))
+disp(repmat('=',[1,165]))
 
 
 %% Display evaluation table (in LaTeX)
@@ -145,20 +145,20 @@ disp(repmat('=',[1,150]))
 % disp('% ------ End of Matlab-generated LaTeX code ------')
 
 %% Export in JSON for web
-% glob_eval.Tgt        = sprintf('%0.3f',mean(Tgt.mean(stab_seqs)));
-% glob_eval.techniques = strrep(techniques,'-','');
-% for ii=1:length(techniques) 
-%     id = strrep(techniques{ii},'-','');
-%     glob_eval.(id).Jmean      = sprintf('%0.3f',mean(all_J.mean(ii,:)));
-%     glob_eval.(id).Jrecall    = sprintf('%0.3f',mean(all_J.recall(ii,:)));
-%     glob_eval.(id).Jdecay     = sprintf('%0.3f',mean(all_J.decay(ii,:)));
-%     glob_eval.(id).Fmean      = sprintf('%0.3f',mean(all_F.mean(ii,:)));
-%     glob_eval.(id).Frecall    = sprintf('%0.3f',mean(all_F.recall(ii,:)));
-%     glob_eval.(id).Fdecay     = sprintf('%0.3f',mean(all_F.decay(ii,:)));
-%     glob_eval.(id).T          = sprintf('%0.3f',mean(all_T.mean(ii,stab_seqs)));
-% end
-% savejson('',glob_eval,['global_eval_' gt_set '.js']);
-% % REMEMBER: Add 'var global_eval_val = '
+glob_eval.Tgt        = sprintf('%0.3f',mean(Tgt.mean(stab_seqs)));
+glob_eval.techniques = strrep(techniques,'-','');
+for ii=1:length(techniques) 
+    id = strrep(techniques{ii},'-','');
+    glob_eval.(id).Jmean      = sprintf('%0.3f',mean(all_J.mean(ii,:)));
+    glob_eval.(id).Jrecall    = sprintf('%0.3f',mean(all_J.recall(ii,:)));
+    glob_eval.(id).Jdecay     = sprintf('%0.3f',mean(all_J.decay(ii,:)));
+    glob_eval.(id).Fmean      = sprintf('%0.3f',mean(all_F.mean(ii,:)));
+    glob_eval.(id).Frecall    = sprintf('%0.3f',mean(all_F.recall(ii,:)));
+    glob_eval.(id).Fdecay     = sprintf('%0.3f',mean(all_F.decay(ii,:)));
+    glob_eval.(id).T          = sprintf('%0.3f',mean(all_T.mean(ii,stab_seqs)));
+end
+savejson('',glob_eval,['global_eval_' gt_set '.js']);
+% REMEMBER: Add 'var global_eval_val = '
 
 
 %% Show all means

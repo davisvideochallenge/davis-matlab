@@ -15,19 +15,18 @@
 % Get the parameters
 experiments_params();
 db = db_attributes();
+gt_set = 'all';
 
 %% Evaluate them or load pre-computed evaluation
 F = cell(1,length(techniques));
 J = cell(1,length(techniques));
 T = cell(1,length(techniques));
 for ii=1:length(techniques)
-    eval = eval_result(techniques{ii},{'F','J','T'});
+    eval = eval_result(techniques{ii},{'F','J','T'},gt_set);
     F{ii} = eval.F;
     J{ii} = eval.J;
     T{ii} = eval.T;
 end
-eval = eval_result('gt','T');
-Tgt  = eval.T;
 
 %% Put them in a single matrix
 mF = zeros(length(F{1}.mean),length(techniques));
@@ -60,7 +59,8 @@ else
 end
 
 % Define the groups of techniques to get the maximum values in bold
-max_groups = [1 1 1   2 2 2 2 2 2 2   3 3 3 3 3];
+max_groups = [1 1 1   2 2 2 2 2 2 2   3 3 3 3 3 3 3 3];
+assert(length(techniques)==length(max_groups))
 
 % Show header
 clc
