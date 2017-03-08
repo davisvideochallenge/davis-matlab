@@ -56,12 +56,20 @@ function eval = eval_sequence(mask_res_in, seq_name, measures)
         mask_gt = db_read_annot(seq_name, frame_ids{f_id});
         
         % Check size of the mask and logical values
-        if ~isequal(length(mask_res{f_id-1}),length(mask_gt))
-            error('The number of objects in the result is not the same than in the ground truth');
-        elseif ~isequal(size(mask_res{f_id-1}{1}),size(mask_gt{1}))
-            error('Size of results and ground truth are not the same');
-        elseif ~islogical(mask_res{f_id-1}{1})
-            error('The input mask must be a logic value');
+        if iscell(mask_gt)
+            if ~isequal(length(mask_res{f_id-1}),length(mask_gt))
+                error('The number of objects in the result is not the same than in the ground truth');
+            elseif ~isequal(size(mask_res{f_id-1}{1}),size(mask_gt{1}))
+                error('Size of results and ground truth are not the same');
+            elseif ~islogical(mask_res{f_id-1}{1})
+                error('The input mask must be a logic value');
+            end
+        else
+            if ~isequal(size(mask_res{f_id-1}),size(mask_gt))
+                error('Size of results and ground truth are not the same');
+            elseif ~islogical(mask_res{f_id-1})
+                error('The input mask must be a logic value');
+            end
         end
         
         % Compute the measures in this particular frame

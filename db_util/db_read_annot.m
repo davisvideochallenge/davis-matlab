@@ -28,8 +28,13 @@ function annot = db_read_annot(seq_id, frame_id)
     end
     
     % Transform it into a cell of masks
-    annot = cell(n_objs,1);
-    for ii=1:n_objs
-        annot{ii} = (im_annot==ii);
+    if db_sing_mult_obj==1
+        annot = cell(n_objs,1);
+        for ii=1:n_objs
+            annot{ii} = (im_annot==ii);
+        end
+    else
+        annot = im_annot;
     end
+        
 end
