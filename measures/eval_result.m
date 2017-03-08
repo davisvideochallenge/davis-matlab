@@ -20,7 +20,7 @@ end
 %% Compute the raw evaluation or load it from file
 to_recompute = {};
 for ii=1:length(measures)
-    res_file = fullfile(eval_folder, [result_id '_' measures{ii} '_' gt_set '.mat']);
+    res_file = fullfile(eval_folder, [result_id '_' measures{ii} '_' gt_set '_' db_get_properties '.mat']);
     if exist(res_file,'file')
         raw_eval.(measures{ii}) = loadvar(res_file,'raw_ev');
         disp(['LOADED: ' res_file])
