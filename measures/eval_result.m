@@ -59,6 +59,13 @@ for ii=1:length(measures)
         eval.(measures{ii}).recall = [raw_eval.(measures{ii}).recall];
         eval.(measures{ii}).decay = [raw_eval.(measures{ii}).decay];
     end
+    
+    % Store per-frame results
+    seq_ids = db_seqs(gt_set);
+    eval.(measures{ii}).raw = cell(1,length(seq_ids));
+    for jj=1:length(seq_ids)
+        eval.(measures{ii}).raw{jj} = raw_eval.(measures{ii})(jj).raw;
+    end
 end
 
 end
