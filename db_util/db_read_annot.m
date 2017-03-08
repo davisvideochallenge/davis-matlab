@@ -14,8 +14,22 @@ function annot = db_read_annot(seq_id, frame_id)
     if ~exist(annot_file,'file')
         error(['Error: ''' annot_file ''' not found, have you downloaded the DAVIS database from the project website?'])
     end
-    annot = imread(annot_file);
-    assert(size(annot,3)==1)
-    assert(all(ismember(unique(annot),[0,255])))
-    annot = (annot>0);
+    im_annot = imread(annot_file);
+    
+    % Some sanity checks
+    assert(size(im_annot,3)==1)
+    n_objs = length(unique(im_annot))-1;
+    assert(isequal(uint8((0:n_objs)'),unique(im_annot)))
+    
+    % If single object
+    if db_sing_mult_obj==0
+        n_objs = 1;
+        im_annot = (im_annot>0);
+    end
+    
+    % Transform it into a cell of masks
+    annot = cell(n_objs,1);
+    for ii=1:n_objs
+        annot{ii} = (im_annot==ii);
+    end
 end

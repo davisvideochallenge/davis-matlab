@@ -13,5 +13,6 @@
 % ------------------------------------------------------------------------
 
 function root_dir = db_root_dir()
-    root_dir = '/Users/jpont/Workspace/gt_dbs/DAVIS/';
+    %root_dir = '/Users/jpont/Workspace/gt_dbs/DAVIS/';
+    root_dir = '/Users/jpont/Dropbox/Jordi/DAVIS/';
 end
