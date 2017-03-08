@@ -26,8 +26,7 @@ function result = db_read_result(seq_id, frame_id, result_id)
             result = (result_im>0);
         end
     else % Multiple objects
-        n_objs = length(unique(result_im))-1;
-        assert(isequal(uint8((0:n_objs)'),unique(result_im)))
+        n_objs = max(result_im(:));
         
         % Transform it into a cell of masks
         result = cell(n_objs,1);

@@ -15,11 +15,9 @@ function annot = db_read_annot(seq_id, frame_id)
         error(['Error: ''' annot_file ''' not found, have you downloaded the DAVIS database from the project website?'])
     end
     im_annot = imread(annot_file);
-    
-    % Some sanity checks
     assert(size(im_annot,3)==1)
-    n_objs = length(unique(im_annot))-1;
-    assert(isequal(uint8((0:n_objs)'),unique(im_annot)))
+    
+    n_objs = max(im_annot(:));
     
     % If single object
     if db_sing_mult_obj==0
