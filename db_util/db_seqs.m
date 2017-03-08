@@ -11,11 +11,22 @@
 % ------------------------------------------------------------------------
 function [db_seq_list, stab_seqs]= db_seqs(subset)
 
+possible_sets = {'train-2016','val-2016','trainval-2016',...
+                 'train-2017','val-2017','trainval-2017','test-dev-2017','test-challenge-2017'};
+
 if ~exist('subset','var')
-    subset = 'all';
+    subset = 'val-2017';
 end
 
-if strcmp(subset,'all')
+if ~ismember(subset,possible_sets)
+    fprintf(2,'The subset requested in ''db_seqs'' is not available.\nPossible values are:\n ')
+    for ii=1:length(possible_sets)-1
+        fprintf(2,'''%s'', ',possible_sets{ii})
+    end
+    fprintf(2,'%s.\n',possible_sets{end});
+end
+
+if strcmp(subset,'trainval-2016')
      db_seq_list = {'bear'
                     'blackswan'
                     'bmx-bumps'
@@ -66,7 +77,7 @@ if strcmp(subset,'all')
                     'swing'
                     'tennis'
                     'train'};
-elseif strcmp(subset,'train')
+elseif strcmp(subset,'train-2016')
      db_seq_list = {'bear'
                     'bmx-bumps'
                     'boat'
@@ -97,7 +108,7 @@ elseif strcmp(subset,'train')
                     'swing'
                     'tennis'
                     'train'};
-elseif strcmp(subset,'val')
+elseif strcmp(subset,'val-2016')
      db_seq_list = {'blackswan'
                     'bmx-trees'
                     'breakdance'

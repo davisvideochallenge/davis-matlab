@@ -1,4 +1,4 @@
 % Automatically-generated function, do not edit manually
-function im_size = db_im_size()
-	im_size = '480p';
+function sing_mult = db_sing_mult_obj()
+	sing_mult = 1;
 end
