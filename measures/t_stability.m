@@ -20,7 +20,31 @@
 %              T      Temporal (in-)stability
 %    raw_results      Supplemental values 
 % ------------------------------------------------------------------------
-function [T, raw_results] = t_stability( object, ground_truth )
+function [T, raw_results] = t_stability( object, ground_truth, num_objects)
+
+    if iscell(object) % Multiple objects
+        assert(iscell(ground_truth))
+        if ~exist('num_objects','var')
+            num_objects = max(length(object),length(ground_truth));
+        end
+        for ii=length(object)+1:num_objects
+            object{ii} = false(size(object{1}));
+        end
+        for ii=length(ground_truth)+1:num_objects
+            ground_truth{ii} = false(size(ground_truth{1}));
+        end
+        assert(length(object)==length(ground_truth));
+    
+        T     = zeros(1,num_objects); 
+        for ii=1:num_objects
+            [T(ii), raw_results(ii)] = t_stability_single(object{ii}, ground_truth{ii}); %#ok<AGROW>
+        end
+    else
+        [T, raw_results] = t_stability_single( object, ground_truth);
+    end
+end
+
+function [T, raw_results] = t_stability_single( object, ground_truth )
 
 %% Parameters
 % Contour extraction parameters

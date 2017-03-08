@@ -11,11 +11,11 @@
 % ------------------------------------------------------------------------
 function [eval, raw_eval] = eval_result(result_id, measures, gt_set)
 
-% % Pre-computed evaluations are stored here
-% eval_folder = fullfile(db_matlab_root_dir,'eval_results');
-% if ~exist(eval_folder,'dir')
-%     mkdir(eval_folder)
-% end
+% Pre-computed evaluations are stored here
+eval_folder = fullfile(db_matlab_root_dir,'eval_results');
+if ~exist(eval_folder,'dir')
+    mkdir(eval_folder)
+end
 
 %% Compute the raw evaluation or load it from file
 to_recompute = {};
@@ -38,83 +38,28 @@ if ~isempty(to_recompute)
     % Compute them all in one pass, not to read things twice
     sel_eval = recompute_raw_eval(result_id, to_recompute, gt_set);
     
-%     % Separate each measure and save them independently
-%     for ii=1:length(to_recompute)
-%         res_file = fullfile(eval_folder, [result_id '_' to_recompute{ii} '_' gt_set '.mat']);
-%         disp(['SAVING: ' res_file])
-% 
-%         raw_ev = sel_eval(ii,:);
-%         save(res_file,'raw_ev','-v7.3');
-%         
-%         raw_eval.(to_recompute{ii}) = raw_ev;
-%         clear raw_ev;
-%     end
-%     clear sel_eval;
-end
-    
-%% Get per-seq mean quality, decay, and recall
+    % Separate each measure and save them independently
+    for ii=1:length(to_recompute)
+        res_file = fullfile(eval_folder, [result_id '_' to_recompute{ii} '_' gt_set '.mat']);
+        disp(['SAVING: ' res_file])
 
-% Get the ids of all sequences
-seq_ids = db_seqs(gt_set);
-
-% Allocate
-if ismember('F',measures)
-    eval.F.mean   = zeros(1,length(seq_ids));
-    eval.F.std    = zeros(1,length(seq_ids));
-    eval.F.recall = zeros(1,length(seq_ids));
-    eval.F.decay  = zeros(1,length(seq_ids));
-    assert(length(seq_ids)==length(raw_eval.F))
-end
-if ismember('J',measures)
-    eval.J.mean   = zeros(1,length(seq_ids));
-    eval.J.std    = zeros(1,length(seq_ids));
-    eval.J.recall = zeros(1,length(seq_ids));
-    eval.J.decay  = zeros(1,length(seq_ids));
-    assert(length(seq_ids)==length(raw_eval.J))
-end
-if ismember('T',measures)
-    eval.T.mean   = zeros(1,length(seq_ids));
-    assert(length(seq_ids)==length(raw_eval.T))
-end
-
-
-% Sweep all sequences
-for s_id = 1:length(seq_ids)
-
-    % F for boundaries
-    if ismember('F',measures)
-        curr_F = raw_eval.F{s_id};
-        assert(~all(isnan(curr_F)));
+        raw_ev = sel_eval.(to_recompute{ii});
+        % save(res_file,'raw_ev','-v7.3');
         
-        eval.F.mean(s_id)   = mean(curr_F);
-        eval.F.std(s_id)    = std(curr_F);
-        eval.F.recall(s_id) = sum(curr_F>0.5)/length(curr_F);
-     
-        tmp = get_mean_values(curr_F,4);
-        eval.F.decay(s_id)  = tmp(1)-tmp(end);
+        raw_eval.(to_recompute{ii}) = raw_ev;
+        clear raw_ev;
     end
+    clear sel_eval;
+end
     
-    % Jaccard
-    if ismember('J',measures)
-        curr_J = raw_eval.J{s_id};
-        
-        eval.J.mean(s_id)   = mean(curr_J);
-        eval.J.std(s_id)    = std(curr_J);
-        eval.J.recall(s_id) = sum(curr_J>0.5)/length(curr_J);
-    
-        tmp = get_mean_values(curr_J,4);
-        eval.J.decay(s_id)  = tmp(1)-tmp(end);
-    end
-    
-    % Temporal stability
-    if ismember('T',measures)
-        curr_T = raw_eval.T{s_id};
-        eval.T.mean(s_id)   = 5*nanmean(curr_T); % NaN mean to erase NaN from empty masks
-                                                 % Multiply by 5 to put it in a similar
-                                                 %  range than other measures
+%% Put everything in a single matrix
+for ii=1:length(measures)
+    eval.(measures{ii}).mean = [raw_eval.(measures{ii}).mean];
+    if ~strcmp(measures{ii},'T')
+        eval.(measures{ii}).recall = [raw_eval.(measures{ii}).recall];
+        eval.(measures{ii}).decay = [raw_eval.(measures{ii}).decay];
     end
 end
-
 
 end
 
@@ -125,9 +70,6 @@ function [eval, seq_ids] = recompute_raw_eval(result_id, measures, gt_set)
     % Get the ids of all sequences
     seq_ids = db_seqs(gt_set);
 
-    % Allocate
-    eval = cell(length(seq_ids),1);
-
     % Sweep all sequences
     for s_id = 1:length(seq_ids)
 
@@ -135,7 +77,7 @@ function [eval, seq_ids] = recompute_raw_eval(result_id, measures, gt_set)
         frame_ids = db_frame_ids(seq_ids{s_id});
 
         % Allocate
-        masks_seq = cell(length(frame_ids)-1,1);
+        masks_seq = cell(length(frame_ids)-2,1);
         
         % Read all frames except first and last
         for f_id = 2:length(frame_ids)-1
@@ -148,6 +90,9 @@ function [eval, seq_ids] = recompute_raw_eval(result_id, measures, gt_set)
         end
         
         % Evaluate these masks
-        eval{s_id} = eval_sequence(masks_seq, seq_ids{s_id}, measures);
+        tmp_eval = eval_sequence(masks_seq, seq_ids{s_id}, measures);
+        for ii=1:length(measures)
+            eval.(measures{ii})(s_id) = tmp_eval.(measures{ii});
+        end
     end
 end

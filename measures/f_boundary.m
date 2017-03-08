@@ -26,7 +26,37 @@
 %	recall   	Recall for boundaries.
 %
 % ------------------------------------------------------------------------
-function [F, precision, recall] = f_boundary(foreground_mask,gt_mask,bound_th)
+function [F, precision, recall] = f_boundary( object, ground_truth, num_objects, bound_th)
+
+    if ~exist('bound_th','var')
+        bound_th = 0.008;
+    end
+
+    if iscell(object) % Multiple objects
+        assert(iscell(ground_truth))
+        if ~exist('num_objects','var')
+            num_objects = max(length(object),length(ground_truth));
+        end
+        for ii=length(object)+1:num_objects
+            object{ii} = false(size(object{1}));
+        end
+        for ii=length(ground_truth)+1:num_objects
+            ground_truth{ii} = false(size(ground_truth{1}));
+        end
+        assert(length(object)==length(ground_truth));
+    
+        F          = zeros(1,num_objects); 
+        precision  = zeros(1,num_objects);
+        recall     = zeros(1,num_objects);
+        for ii=1:num_objects
+            [F(ii), precision(ii), recall(ii)] = f_boundary_single(object{ii}, ground_truth{ii}, bound_th);
+        end
+    else
+        [F, precision, recall] = f_boundary_single( object, ground_truth, bound_th);
+    end
+end
+
+function [F, precision, recall] = f_boundary_single(foreground_mask, gt_mask, bound_th)
 
 
 % Default threshold

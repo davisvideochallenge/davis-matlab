@@ -34,10 +34,20 @@ function eval = eval_sequence(mask_res_in, seq_name, measures)
         error('The number of input masks is not correct.')
     end
     
-    % Allocate
-    eval_tmp = cell(length(measures));
+    % Get number of objects (GT in the first frame)
+    mask_gt = db_read_annot(seq_name, frame_ids{1});
+    if iscell(mask_gt)
+        n_obj = length(mask_gt);
+    else
+        n_obj = 1;
+    end
     
-    last_result = zeros(size(db_read_annot(seq_name, frame_ids{1})));
+    % Allocate
+    for ii=1:length(measures)
+        frame_eval.(measures{ii}) = zeros(length(frame_ids)-2,n_obj);
+    end
+
+    last_result = db_read_annot(seq_name, frame_ids{1});
     fprintf(seq_name);
     for f_id = 2:length(frame_ids)-1
         fprintf('.');
@@ -46,63 +56,68 @@ function eval = eval_sequence(mask_res_in, seq_name, measures)
         mask_gt = db_read_annot(seq_name, frame_ids{f_id});
         
         % Check size of the mask and logical values
-        if ~isequal(size(mask_res{f_id-1}),size(mask_gt))
-            error('The size of the input masks is not correct');
-        elseif ~islogical(mask_res{f_id-1})
+        if ~isequal(length(mask_res{f_id-1}),length(mask_gt))
+            error('The number of objects in the result is not the same than in the ground truth');
+        elseif ~isequal(size(mask_res{f_id-1}{1}),size(mask_gt{1}))
+            error('Size of results and ground truth are not the same');
+        elseif ~islogical(mask_res{f_id-1}{1})
             error('The input mask must be a logic value');
         end
         
-        % Compute J
-        [ism, pos] = ismember('J',measures);
-        if ism, eval_tmp{pos}(f_id-1) = jaccard_region(mask_res{f_id-1}, mask_gt); end
-
-        % Compute F
-        [ism, pos] = ismember('F',measures);
-        if ism, eval_tmp{pos}(f_id-1) = f_boundary(mask_res{f_id-1}, mask_gt); end
-
-        % Temporal (in-)stability
-        [ism, pos] = ismember('T',measures);
-        if ism, eval_tmp{pos}(f_id-1) = t_stability(last_result, mask_res{f_id-1}); end
-
+        % Compute the measures in this particular frame
+        tmp_eval = eval_frame(mask_res{f_id-1}, measures, mask_gt, n_obj, last_result);
+        for ii=1:length(measures)
+            frame_eval.(measures{ii})(f_id-1,:) = tmp_eval.(measures{ii});
+        end
+       
         % Keep last result
         last_result = mask_res{f_id-1};
     end
     fprintf('\n');
+    
     % F for boundaries
-    [ism, pos] = ismember('F',measures);
-    if ism
-        curr_F = eval_tmp{pos};
-        assert(~all(isnan(curr_F)));
+    if ismember('F',measures)
+        assert(~all(isnan(frame_eval.F(:))));
         
-        eval.F.mean   = mean(curr_F);
-        eval.F.std    = std(curr_F);
-        eval.F.recall = sum(curr_F>0.5)/length(curr_F);
-     
-        tmp = get_mean_values(curr_F,4);
-        eval.F.decay  = tmp(1)-tmp(end);
+        eval.F.mean   = mean(frame_eval.F,1);
+        eval.F.std    = std(frame_eval.F,1);
+        eval.F.recall = sum(frame_eval.F>0.5,1)/size(frame_eval.F,1);
+        
+        for ii=1:n_obj
+            tmp = get_mean_values(frame_eval.F(:,ii),4);
+            eval.F.decay(ii)  = tmp(1)-tmp(end);
+        end
+        
+        % Store per-frame results
+        eval.F.raw = frame_eval.F;
     end
     
     % Jaccard
-    [ism, pos] = ismember('J',measures);
-    if ism
-        curr_J =  eval_tmp{pos};
+    if ismember('J',measures)
+        eval.J.mean   = mean(frame_eval.J,1);
+        eval.J.std    = std(frame_eval.J,1);
+        eval.J.recall = sum(frame_eval.J>0.5,1)/size(frame_eval.J,1);
         
-        eval.J.mean   = mean(curr_J);
-        eval.J.std    = std(curr_J);
-        eval.J.recall = sum(curr_J>0.5)/length(curr_J);
-    
-        tmp = get_mean_values(curr_J,4);
-        eval.J.decay  = tmp(1)-tmp(end);
+        for ii=1:n_obj
+            tmp = get_mean_values(frame_eval.J(:,ii),4);
+            eval.J.decay(ii)  = tmp(1)-tmp(end);
+        end
+        
+        % Store per-frame results
+        eval.J.raw = frame_eval.J;
     end
     
     % Temporal stability
-    [ism, pos] = ismember('T',measures);
-    if ism
-        curr_T = eval_tmp{pos};
-        eval.T.mean   = 5*nanmean(curr_T); % NaN mean to erase NaN from empty masks
-                                                 % Multiply by 5 to put it in a similar
-                                                 %  range than other measures
-    end
+    if ismember('T',measures)
+        eval.T.mean   = 5*nanmean(frame_eval.T,1); % NaN mean to erase NaN from empty masks
+                                                   % Multiply by 5 to put it in a similar
+                                                   %  range than other measures
+                                                   
+               
+        % Store per-frame results
+        eval.F.raw = frame_eval.T;
+    end 
+    
 end
 
 function mvals = get_mean_values(values,N_bins)

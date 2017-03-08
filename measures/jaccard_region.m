@@ -23,7 +23,37 @@
 %             fn       Area of the false negatives
 %
 % ------------------------------------------------------------------------
-function [J, inters, fp, fn] = jaccard_region( object, ground_truth )
+function [J, inters, fp, fn] = jaccard_region( object, ground_truth, num_objects )
+
+    if iscell(object) % Multiple objects
+        assert(iscell(ground_truth))
+        if ~exist('num_objects','var')
+            num_objects = max(length(object),length(ground_truth));
+        end
+        for ii=length(object)+1:num_objects
+            object{ii} = false(size(object{1}));
+        end
+        for ii=length(ground_truth)+1:num_objects
+            ground_truth{ii} = false(size(ground_truth{1}));
+        end
+        assert(length(object)==length(ground_truth));
+    
+        J  = zeros(1,num_objects); inters = zeros(1,num_objects);
+        fp = zeros(1,num_objects); fn     = zeros(1,num_objects);
+        for ii=1:num_objects
+            [J(ii), inters(ii), fp(ii), fn(ii)] = jaccard_single(object{ii}, ground_truth{ii});
+        end
+    else
+        [J, inters, fp, fn] = jaccard_single( object, ground_truth );
+    end
+    
+    
+
+end
+
+
+
+function [J, inters, fp, fn] = jaccard_single( object, ground_truth )
 
 % Make sure they're binary
 object       = logical(object);
@@ -46,5 +76,5 @@ if denom==0
 else
     J =  inters/denom;
 end
-
+end
 
