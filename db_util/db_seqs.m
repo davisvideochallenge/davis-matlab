@@ -12,7 +12,8 @@
 function [db_seq_list, stab_seqs]= db_seqs(subset, quiet)
 
 possible_sets = {'train-2016','val-2016','trainval-2016',...
-                 'train-2017','val-2017','trainval-2017','test-dev-2017','test-challenge-2017'};
+                 'train-2017','val-2017','trainval-2017','test-dev-2017','test-challenge-2017',...
+                 'debug-2017'};
 
 % Default value
 if ~exist('subset','var')
@@ -110,6 +111,8 @@ elseif strcmp(subset,'trainval-2017')
     train2017 = db_seqs('train-2017',1);
     val2017 = db_seqs('val-2017',1);
     db_seq_list = sort([train2017;val2017(:)]);
+elseif strcmp(subset,'debug-2017')
+    db_seq_list = {'bear';'boxing';'scooter-gray'};
 end
 
 

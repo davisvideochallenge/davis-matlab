@@ -1,6 +1,6 @@
 % ------------------------------------------------------------------------ 
-% Sergi Caelles
-% October 2016
+% Sergi Caelles, October 2016
+% Jordi Pont-Tuset, March 2017
 % ------------------------------------------------------------------------ 
 % This file is part of the DAVIS package presented in:
 %   Federico Perazzi, Jordi Pont-Tuset, Brian McWilliams,
@@ -9,12 +9,11 @@
 %   CVPR 2016
 % Please consider citing the paper if you use this code.
 % ------------------------------------------------------------------------
-function eval = eval_sequence(mask_res_in,seq_name,measures)
+function eval = eval_sequence(mask_res_in, seq_name, measures)
+    
+    % Check measures
     if ischar(measures)
         measures = {measures};
-    end    
-    if ~ismember(seq_name,db_seqs())
-        error('This sequence does not exist in the DAVIS database')
     end
     if ~iscell(measures)
         error('Measures must be a cell or a single char')
@@ -22,7 +21,8 @@ function eval = eval_sequence(mask_res_in,seq_name,measures)
     if ~all(ismember(measures,{'J','F','T'}))
         error('Measures not valid, must be in: ''J'',''F'', ''T''')
     end
-
+    
+    % Get all frames of the sequence
     frame_ids = db_frame_ids(seq_name);
     
     % Sweep all frames except first and last
@@ -36,7 +36,6 @@ function eval = eval_sequence(mask_res_in,seq_name,measures)
     
     % Allocate
     eval_tmp = cell(length(measures));
-    
     
     last_result = zeros(size(db_read_annot(seq_name, frame_ids{1})));
     fprintf(seq_name);

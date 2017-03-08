@@ -11,22 +11,11 @@
 % ------------------------------------------------------------------------
 function [eval, raw_eval] = eval_result(result_id, measures, gt_set)
 
-% Pre-computed evaluations are stored here
-eval_folder = fullfile(db_matlab_root_dir,'eval_results');
-if ~exist(eval_folder,'dir')
-    mkdir(eval_folder)
-end
-
-% Check measures
-if ischar(measures)
-    measures = {measures};
-end
-if ~iscell(measures)
-    error('Measures must be a cell or a single char')
-end
-if ~all(ismember(measures,{'J','F','T'}))
-    error('Measures not valid, must be in: ''J'',''F'', ''T''')
-end
+% % Pre-computed evaluations are stored here
+% eval_folder = fullfile(db_matlab_root_dir,'eval_results');
+% if ~exist(eval_folder,'dir')
+%     mkdir(eval_folder)
+% end
 
 %% Compute the raw evaluation or load it from file
 to_recompute = {};
@@ -49,18 +38,18 @@ if ~isempty(to_recompute)
     % Compute them all in one pass, not to read things twice
     sel_eval = recompute_raw_eval(result_id, to_recompute, gt_set);
     
-    % Separate each measure and save them independently
-    for ii=1:length(to_recompute)
-        res_file = fullfile(eval_folder, [result_id '_' to_recompute{ii} '_' gt_set '.mat']);
-        disp(['SAVING: ' res_file])
-
-        raw_ev = sel_eval(ii,:);
-        save(res_file,'raw_ev','-v7.3');
-        
-        raw_eval.(to_recompute{ii}) = raw_ev;
-        clear raw_ev;
-    end
-    clear sel_eval;
+%     % Separate each measure and save them independently
+%     for ii=1:length(to_recompute)
+%         res_file = fullfile(eval_folder, [result_id '_' to_recompute{ii} '_' gt_set '.mat']);
+%         disp(['SAVING: ' res_file])
+% 
+%         raw_ev = sel_eval(ii,:);
+%         save(res_file,'raw_ev','-v7.3');
+%         
+%         raw_eval.(to_recompute{ii}) = raw_ev;
+%         clear raw_ev;
+%     end
+%     clear sel_eval;
 end
     
 %% Get per-seq mean quality, decay, and recall
@@ -82,7 +71,6 @@ if ismember('J',measures)
     eval.J.recall = zeros(1,length(seq_ids));
     eval.J.decay  = zeros(1,length(seq_ids));
     assert(length(seq_ids)==length(raw_eval.J))
-
 end
 if ismember('T',measures)
     eval.T.mean   = zeros(1,length(seq_ids));
@@ -138,57 +126,28 @@ function [eval, seq_ids] = recompute_raw_eval(result_id, measures, gt_set)
     seq_ids = db_seqs(gt_set);
 
     % Allocate
-    eval = cell(length(measures),length(seq_ids));
+    eval = cell(length(seq_ids),1);
 
     % Sweep all sequences
     for s_id = 1:length(seq_ids)
 
         % Get all frame ids for that sequence
         frame_ids = db_frame_ids(seq_ids{s_id});
-        fprintf('%s',seq_ids{s_id});
 
-        % Sweep all frames except first and last
-        last_result = zeros(size(db_read_annot(seq_ids{s_id}, frame_ids{1})));
+        % Allocate
+        masks_seq = cell(length(frame_ids)-1,1);
+        
+        % Read all frames except first and last
         for f_id = 2:length(frame_ids)-1
-            fprintf('.');
-
-            % Read the object annotation
-            annot = db_read_annot(seq_ids{s_id}, frame_ids{f_id});
-
             % Read a result (or ground truth in case of "gt")
             if strcmp(result_id,'gt')
-                result = db_read_annot(seq_ids{s_id}, frame_ids{f_id});
+                masks_seq{f_id-1} = db_read_annot(seq_ids{s_id}, frame_ids{f_id});
             else
-                result = db_read_result(seq_ids{s_id}, frame_ids{f_id}, result_id);
+                masks_seq{f_id-1} = db_read_result(seq_ids{s_id}, frame_ids{f_id}, result_id);
             end
-
-            % Compute J
-            [ism, pos] = ismember('J',measures);
-            if ism, eval{pos,s_id}(f_id-1) = jaccard_region(result, annot); end
-            
-            % Compute F
-            [ism, pos] = ismember('F',measures);
-            if ism, eval{pos,s_id}(f_id-1) = f_boundary(result, annot); end
-            
-            % Temporal (in-)stability
-            [ism, pos] = ismember('T',measures);
-            if ism, eval{pos,s_id}(f_id-1) = t_stability(last_result, result); end
-            
-            % Keep last result
-            last_result = result;
         end
-
-        fprintf('\n');
-    end
-end
-
-
-
-function mvals = get_mean_values(values,N_bins)
-    % Get four mean values to see how the quality evolves with time
-    ids = round(linspace(1, length(values),N_bins+1));
-    mvals = zeros(1,length(ids)-1);
-    for jj=1:(length(ids)-1)
-       mvals(jj) = mean(values(ids(jj):ids(jj+1)));
+        
+        % Evaluate these masks
+        eval{s_id} = eval_sequence(masks_seq, seq_ids{s_id}, measures);
     end
 end
