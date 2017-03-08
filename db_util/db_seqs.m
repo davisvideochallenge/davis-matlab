@@ -26,58 +26,7 @@ if ~ismember(subset,possible_sets)
     fprintf(2,'%s.\n',possible_sets{end});
 end
 
-if strcmp(subset,'trainval-2016')
-     db_seq_list = {'bear'
-                    'blackswan'
-                    'bmx-bumps'
-                    'bmx-trees'
-                    'boat'
-                    'breakdance'
-                    'breakdance-flare'
-                    'bus'
-                    'camel'
-                    'car-roundabout'
-                    'car-shadow'
-                    'car-turn'
-                    'cows'
-                    'dance-jump'
-                    'dance-twirl'
-                    'dog'
-                    'dog-agility'
-                    'drift-chicane'
-                    'drift-straight'
-                    'drift-turn'
-                    'elephant'
-                    'flamingo'
-                    'goat'
-                    'hike'
-                    'hockey'
-                    'horsejump-high'
-                    'horsejump-low'
-                    'kite-surf'
-                    'kite-walk'
-                    'libby'
-                    'lucia'
-                    'mallard-fly'
-                    'mallard-water'
-                    'motocross-bumps'
-                    'motocross-jump'
-                    'motorbike'
-                    'paragliding'
-                    'paragliding-launch'
-                    'parkour'
-                    'rhino'
-                    'rollerblade'
-                    'scooter-black'
-                    'scooter-gray'
-                    'soapbox'
-                    'soccerball'
-                    'stroller'
-                    'surf'
-                    'swing'
-                    'tennis'
-                    'train'};
-elseif strcmp(subset,'train-2016')
+if strcmp(subset,'train-2016')
      db_seq_list = {'bear'
                     'bmx-bumps'
                     'boat'
@@ -129,6 +78,10 @@ elseif strcmp(subset,'val-2016')
                     'parkour'
                     'scooter-black'
                     'soapbox'};
+elseif strcmp(subset,'trainval-2016')
+    train2016 = db_seqs('train-2016');
+    val2016 = db_seqs('val-2016');
+    db_seq_list = sort([train2016;val2016(:)]);
 end
 
 
