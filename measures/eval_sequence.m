@@ -123,7 +123,7 @@ function eval = eval_sequence(mask_res_in, seq_name, measures)
                                                    
                
         % Store per-frame results
-        eval.F.raw = frame_eval.T;
+        eval.T.raw = frame_eval.T;
     end 
     
 end
