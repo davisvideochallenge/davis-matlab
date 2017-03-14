@@ -17,6 +17,10 @@ if ~exist(eval_folder,'dir')
     mkdir(eval_folder)
 end
 
+if ~iscell(measures)
+    measures = {measures};
+end
+
 %% Compute the raw evaluation or load it from file
 to_recompute = {};
 for ii=1:length(measures)
