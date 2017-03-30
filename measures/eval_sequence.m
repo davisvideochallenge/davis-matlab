@@ -57,7 +57,7 @@ function eval = eval_sequence(mask_res_in, seq_name, measures)
         
         % Check size of the mask and logical values
         if iscell(mask_gt)
-            if ~isequal(length(mask_res{f_id-1}),length(mask_gt))
+            if length(mask_res{f_id-1})>length(mask_gt)
                 error('The number of objects in the result is not the same than in the ground truth');
             elseif ~isequal(size(mask_res{f_id-1}{1}),size(mask_gt{1}))
                 error('Size of results and ground truth are not the same');
@@ -71,6 +71,7 @@ function eval = eval_sequence(mask_res_in, seq_name, measures)
                 error('The input mask must be a logical value');
             end
         end
+        
         
         % Compute the measures in this particular frame
         tmp_eval = eval_frame(mask_res{f_id-1}, measures, mask_gt, n_obj, last_result);
