@@ -17,7 +17,9 @@ function result = db_read_result(seq_id, frame_id, result_id)
     result_im = imread(res_file);
     
     % Some sanity checks
-    assert(size(result_im,3)==1)
+    if (size(result_im,3)~=1)
+        error('You are reading an image result with three channels, should have only one');
+    end
     
     if db_sing_mult_obj()==0 % Single object
         if ~(all(ismember(unique(result_im),[0,255])) || all(ismember(unique(result_im),[0,1])))
@@ -27,6 +29,9 @@ function result = db_read_result(seq_id, frame_id, result_id)
         end
     else % Multiple objects
         n_objs = max(result_im(:));
+        if n_objs==255
+            fprintf(2,'You are reading an image with a maximum value of 255, which is interpreted as having 255 different objects, are you sure that is what you want?\n');
+        end
         
         % Transform it into a cell of masks
         result = cell(n_objs,1);

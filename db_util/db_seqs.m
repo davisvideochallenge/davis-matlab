@@ -12,12 +12,12 @@
 function [db_seq_list, stab_seqs]= db_seqs(subset, quiet)
 
 possible_sets = {'train-2016','val-2016','trainval-2016',...
-                 'train-2017','val-2017','trainval-2017','test-dev-2017','test-challenge-2017',...
-                 'debug-2017'};
+                 'train-2017','val-2017','trainval-2017',...
+                 'test-dev-2017'};
 
 % Default value
 if ~exist('subset','var')
-    subset = 'val-2017';
+    subset = 'test-dev-2017';
 end
 if ~exist('quiet','var')
     quiet = 0;
@@ -30,6 +30,9 @@ if ~ismember(subset,possible_sets)
         fprintf(2,'''%s'', ',possible_sets{ii})
     end
     fprintf(2,'%s.\n',possible_sets{end});
+    db_seq_list = [];
+    stab_seqs = [];
+    return 
 end
 
 % Check old and multiple or new and single
@@ -102,17 +105,84 @@ elseif strcmp(subset,'trainval-2016')
 elseif strcmp(subset,'train-2017')
     train2016 = db_seqs('train-2016',1);
     db_seq_list = sort([train2016;
-                       {'boxing'}]);
+                       {'boxing-fisheye'
+                        'cat-girl'
+                        'classic-car'
+                        'color-run'
+                        'crossing'
+                        'dancing'
+                        'disc-jockey'
+                        'dog-gooses'
+                        'dogs-scale'
+                        'drone'
+                        'kid-football'
+                        'koala'
+                        'lady-running'
+                        'lindy-hop'
+                        'longboard'
+                        'miami-surf'
+                        'night-race'
+                        'planes-water'
+                        'rallye'
+                        'schoolgirls'
+                        'scooter-board'
+                        'sheep'
+                        'skate-park'
+                        'snowboard'
+                        'stunt'
+                        'tractor-sand'
+                        'tuk-tuk'
+                        'upside-down'
+                        'varanus-cage'
+                        'walking'}]);
 elseif strcmp(subset,'val-2017')
     val2016 = db_seqs('val-2016',1);
     db_seq_list = sort([val2016;
-                       {'boxing-fisheye'}]);
+                       {'aerobatics'
+                        'bike-packing'
+                        'dogs-jump'
+                        'gold-fish'
+                        'india'
+                        'judo'
+                        'loading'
+                        'mbike-trick'
+                        'pigs'
+                        'shooting'}]);
 elseif strcmp(subset,'trainval-2017')
     train2017 = db_seqs('train-2017',1);
     val2017 = db_seqs('val-2017',1);
     db_seq_list = sort([train2017;val2017(:)]);
-elseif strcmp(subset,'debug-2017')
-    db_seq_list = {'bear';'boxing';'scooter-gray'};
+elseif strcmp(subset,'test-dev-2017')
+    db_seq_list =  {'car-race'
+                    'carousel'
+                    'cats-car'
+                    'chamaleon'
+                    'deer'
+                    'girl-dog'
+                    'golf'
+                    'guitar-violin'
+                    'gym'
+                    'helicopter'
+                    'horsejump-stick'
+                    'hoverboard'
+                    'lab-coat'
+                    'lock'
+                    'man-bike'
+                    'monkeys-trees'
+                    'mtb-race'
+                    'orchid'
+                    'people-sunset'
+                    'planes-crossing'
+                    'rollercoaster'
+                    'salsa'
+                    'seasnake'
+                    'skate-jump'
+                    'slackline'
+                    'subway'
+                    'tandem'
+                    'telemarkt'
+                    'tennis-vest'
+                    'tractor'};
 end
 
 

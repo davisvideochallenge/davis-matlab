@@ -62,13 +62,13 @@ function eval = eval_sequence(mask_res_in, seq_name, measures)
             elseif ~isequal(size(mask_res{f_id-1}{1}),size(mask_gt{1}))
                 error('Size of results and ground truth are not the same');
             elseif ~islogical(mask_res{f_id-1}{1})
-                error('The input mask must be a logic value');
+                error('The input mask must be a logical value');
             end
         else
             if ~isequal(size(mask_res{f_id-1}),size(mask_gt))
                 error('Size of results and ground truth are not the same');
             elseif ~islogical(mask_res{f_id-1})
-                error('The input mask must be a logic value');
+                error('The input mask must be a logical value');
             end
         end
         
