@@ -17,7 +17,10 @@ function annot = db_read_annot(seq_id, frame_id)
     im_annot = imread(annot_file);
     assert(size(im_annot,3)==1)
     
-    n_objs = max(im_annot(:));
+    % Get the number of objects from the first frame
+    fr_ids = db_frame_ids(seq_id);
+    im_first = imread(fullfile(db_annot_dir, seq_id, [fr_ids{1} '.png']));
+    n_objs = max(im_first(:));
     
     % If single object
     if db_sing_mult_obj==0
