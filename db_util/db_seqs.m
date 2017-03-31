@@ -61,6 +61,9 @@ end
 % Now return the stable sequences if asked. We remove the unstable from the
 % set requested
 if nargout>1
+    % TODO
+    fprintf(2,'Warning: You requested the stable sequences but they are not updated\n')
+    
     % List of sequences where stability is not computed (occlusions, etc.)
     unstab_seqs = {'lucia', 'rollerblade', 'mallard-fly', 'bmx-bumps', 'goat', 'scooter-gray', 'bmx-trees', 'dance-twirl', 'motocross-jump', 'soccerball', 'breakdance', 'dog', 'horsejump-high', 'motorbike', 'breakdance-flare', 'dog-agility', 'horsejump-low', 'paragliding', 'drift-chicane', 'swing','parkour','tennis','libby'};
     

@@ -11,6 +11,9 @@
 % ------------------------------------------------------------------------
 function result = db_attributes()
 
+% TODO
+fprintf(2,'Warning: You requested the attributes but they are not updated\n')
+    
 att_file = fullfile(db_matlab_root_dir,'db_util','private','attributes.txt');
 
 fid = fopen(att_file,'r');
