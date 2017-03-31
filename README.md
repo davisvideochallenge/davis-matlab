@@ -2,8 +2,7 @@
 Introduction
 --------------
 Package containing the **Matlab** implementation of the code behind:
-*A Benchmark Dataset and Evaluation Methodology for Video Object Segmentation*
-[DAVIS](http://davischallenge.org).
+[The 2017 DAVIS Video Object Segmentation Challenge](http://davischallenge.org).
 You can find the **Python** implementation [here](https://github.com/fperazzi/davis).
 
 
