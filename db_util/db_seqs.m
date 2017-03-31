@@ -46,145 +46,17 @@ if ~quiet
 end
 
 % Return the sets
-if strcmp(subset,'train-2016')
-     db_seq_list = {'bear'
-                    'bmx-bumps'
-                    'boat'
-                    'breakdance-flare'
-                    'bus'
-                    'car-turn'
-                    'dance-jump'
-                    'dog-agility'
-                    'drift-turn'
-                    'elephant'
-                    'flamingo'
-                    'hike'
-                    'hockey'
-                    'horsejump-low'
-                    'kite-walk'
-                    'lucia'
-                    'mallard-fly'
-                    'mallard-water'
-                    'motocross-bumps'
-                    'motorbike'
-                    'paragliding'
-                    'rhino'
-                    'rollerblade'
-                    'scooter-gray'
-                    'soccerball'
-                    'stroller'
-                    'surf'
-                    'swing'
-                    'tennis'
-                    'train'};
-elseif strcmp(subset,'val-2016')
-     db_seq_list = {'blackswan'
-                    'bmx-trees'
-                    'breakdance'
-                    'camel'
-                    'car-roundabout'
-                    'car-shadow'
-                    'cows'
-                    'dance-twirl'
-                    'dog'
-                    'drift-chicane'
-                    'drift-straight'
-                    'goat'
-                    'horsejump-high'
-                    'kite-surf'
-                    'libby'
-                    'motocross-jump'
-                    'paragliding-launch'
-                    'parkour'
-                    'scooter-black'
-                    'soapbox'};
-elseif strcmp(subset,'trainval-2016')
+if strcmp(subset,'trainval-2016')
     train2016 = db_seqs('train-2016',1);
     val2016 = db_seqs('val-2016',1);
     db_seq_list = sort([train2016;val2016(:)]);
-elseif strcmp(subset,'train-2017')
-    train2016 = db_seqs('train-2016',1);
-    db_seq_list = sort([train2016;
-                       {'boxing-fisheye'
-                        'cat-girl'
-                        'classic-car'
-                        'color-run'
-                        'crossing'
-                        'dancing'
-                        'disc-jockey'
-                        'dog-gooses'
-                        'dogs-scale'
-                        'drone'
-                        'kid-football'
-                        'koala'
-                        'lady-running'
-                        'lindy-hop'
-                        'longboard'
-                        'miami-surf'
-                        'night-race'
-                        'planes-water'
-                        'rallye'
-                        'schoolgirls'
-                        'scooter-board'
-                        'sheep'
-                        'skate-park'
-                        'snowboard'
-                        'stunt'
-                        'tractor-sand'
-                        'tuk-tuk'
-                        'upside-down'
-                        'varanus-cage'
-                        'walking'}]);
-elseif strcmp(subset,'val-2017')
-    val2016 = db_seqs('val-2016',1);
-    db_seq_list = sort([val2016;
-                       {'bike-packing'
-                        'dogs-jump'
-                        'gold-fish'
-                        'india'
-                        'judo'
-                        'lab-coat'
-                        'loading'
-                        'mbike-trick'
-                        'pigs'
-                        'shooting'}]);
 elseif strcmp(subset,'trainval-2017')
     train2017 = db_seqs('train-2017',1);
     val2017 = db_seqs('val-2017',1);
     db_seq_list = sort([train2017;val2017(:)]);
-elseif strcmp(subset,'test-dev-2017')
-    db_seq_list =  {'aerobatics'
-                    'car-race'
-                    'carousel'
-                    'cats-car'
-                    'chamaleon'
-                    'deer'
-                    'girl-dog'
-                    'golf'
-                    'guitar-violin'
-                    'gym'
-                    'helicopter'
-                    'horsejump-stick'
-                    'hoverboard'
-                    'lock'
-                    'man-bike'
-                    'monkeys-trees'
-                    'mtb-race'
-                    'orchid'
-                    'people-sunset'
-                    'planes-crossing'
-                    'rollercoaster'
-                    'salsa'
-                    'seasnake'
-                    'skate-jump'
-                    'slackline'
-                    'subway'
-                    'tandem'
-                    'telemarkt'
-                    'tennis-vest'
-                    'tractor'};
+else
+    db_seq_list = read_list_from_file( subset );
 end
-
 
 % Now return the stable sequences if asked. We remove the unstable from the
 % set requested
