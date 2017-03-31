@@ -12,7 +12,7 @@
 % Please consider citing the paper if you use this code.
 % ------------------------------------------------------------------------
 function ids = read_list_from_file( gt_set )
-    index_file = fullfile(db_root_dir,'Sets',[gt_set '.txt']);
+    index_file = fullfile(db_root_dir,'ImageSets',[gt_set '.txt']);
     if ~exist(index_file,'file')
         error(['File ''' index_file ''' not found... Check the README'])
     end

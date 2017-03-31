@@ -3,7 +3,7 @@ Introduction
 --------------
 Package containing the **Matlab** implementation of the code behind:
 *A Benchmark Dataset and Evaluation Methodology for Video Object Segmentation*
-[DAVIS](https://graphics.ethz.ch/~perazzif/davis/index.html).
+[DAVIS](http://davischallenge.org).
 You can find the **Python** implementation [here](https://github.com/fperazzi/davis).
 
 
@@ -18,6 +18,8 @@ Code Installation
 
 Code Usage
 -----------------
+- The script `demo_eval_multiple.m` contains a demo of how annotations and 
+  results are stored in the case of multiple objects.
 - The script `demo_sweep.m` contains a demo of how the dataset images and
   annotations are read (all functions in `db_util`).
 - The script `measures/eval_result.m` runs the evaluation for the selected measures
@@ -38,7 +40,15 @@ Evaluate your technique
 
 Citation
 --------------
-Please cite `DAVIS` in your publications if it helps your research:
+Please cite `DAVIS 2017` and `DAVIS 2016` in your publications if it helps your research:
+
+    @article{Pont-Tuset_arXiv_2017,
+      author    = {Jordi Pont-Tuset and Federico Perazzi and Sergi Caelles and
+                   Pablo Arbel\'aez and Alexander Sorkine-Hornung and Luc Van Gool},
+      title     = {The 2017 DAVIS Challenge on Video Object Segmentation},
+      journal   = {arXiv},
+      year      = {2017}
+    }
 
     @inproceedings{Perazzi_CVPR_2016,
       author    = {Federico Perazzi and
