@@ -138,12 +138,12 @@ elseif strcmp(subset,'train-2017')
 elseif strcmp(subset,'val-2017')
     val2016 = db_seqs('val-2016',1);
     db_seq_list = sort([val2016;
-                       {'aerobatics'
-                        'bike-packing'
+                       {'bike-packing'
                         'dogs-jump'
                         'gold-fish'
                         'india'
                         'judo'
+                        'lab-coat'
                         'loading'
                         'mbike-trick'
                         'pigs'
@@ -153,7 +153,8 @@ elseif strcmp(subset,'trainval-2017')
     val2017 = db_seqs('val-2017',1);
     db_seq_list = sort([train2017;val2017(:)]);
 elseif strcmp(subset,'test-dev-2017')
-    db_seq_list =  {'car-race'
+    db_seq_list =  {'aerobatics'
+                    'car-race'
                     'carousel'
                     'cats-car'
                     'chamaleon'
@@ -165,7 +166,6 @@ elseif strcmp(subset,'test-dev-2017')
                     'helicopter'
                     'horsejump-stick'
                     'hoverboard'
-                    'lab-coat'
                     'lock'
                     'man-bike'
                     'monkeys-trees'
