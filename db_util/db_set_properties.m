@@ -20,9 +20,12 @@
 %             'Raw'  - Raw resolution of the images (4k, 1080p, etc.)
 %    Resolution at which the images and annotations are used.
 % ------------------------------------------------------------------------
-function db_set_properties(single_or_multiple_objects, im_size)
+function db_set_properties(year, single_or_multiple_objects, im_size)
 
     % Get default values
+    if ~exist('year','var')
+        year = 2017;
+    end
     if ~exist('single_or_multiple_objects','var')
         single_or_multiple_objects = 1;
     end
@@ -31,11 +34,14 @@ function db_set_properties(single_or_multiple_objects, im_size)
     end
     
     % Check values are correct
+    if (year~=2016) && (year~=2017)
+        error('year must be 2016 or 2017')
+    end
     if (single_or_multiple_objects~=0) && (single_or_multiple_objects~=1)
         error('single_or_multiple_objects must be ''0'' or ''1''')
     end
-    if (~strcmp(im_size,'480p')) && (~strcmp(im_size,'Raw'))
-        error('im_size must be ''480p'' or ''Raw''')
+    if (~strcmp(im_size,'480p')) && (~strcmp(im_size,'Full-Resolution'))
+        error('im_size must be ''480p'' or ''Full-Resolution''')
     end
     
     % Display the values used
@@ -44,9 +50,12 @@ function db_set_properties(single_or_multiple_objects, im_size)
     else
         text_smo = 'a ''single'' object per sequence';
     end
-    fprintf('Setting the DAVIS dataset properties (db_set_properties) to image size ''%s'' and %s.\n',im_size,text_smo)
+    fprintf('Setting the DAVIS dataset properties (db_set_properties) to %d, image size ''%s'' and %s.\n',year,im_size,text_smo)
 
     % Set values
+    substitute_file_text(...
+        fullfile(db_matlab_root_dir,'db_util','private','db_year.m'),...
+        sprintf('%% Automatically-generated function, do not edit manually\nfunction year = db_year()\n\tyear = %d;\nend\n',year))
     substitute_file_text(...
         fullfile(db_matlab_root_dir,'db_util','private','db_sing_mult_obj.m'),...
         sprintf('%% Automatically-generated function, do not edit manually\nfunction sing_mult = db_sing_mult_obj()\n\tsing_mult = %d;\nend\n',single_or_multiple_objects))
