@@ -9,18 +9,16 @@
 %   CVPR 2016
 % Please consider citing the paper if you use this code.
 % ------------------------------------------------------------------------
-function [db_seq_list, stab_seqs]= db_seqs(subset, quiet)
+function [db_seq_list, stab_seqs]= db_seqs(subset)
 
-possible_sets = {'train-2016','val-2016','trainval-2016',...
-                 'train-2017','val-2017','trainval-2017',...
-                 'test-dev-2017'};
+possible_sets = {'Train','Val','Train-Val'};
+if db_year()==2017
+    possible_sets{end+1} = 'Test-Dev';
+end
 
 % Default value
 if ~exist('subset','var')
-    subset = 'test-dev-2017';
-end
-if ~exist('quiet','var')
-    quiet = 0;
+    subset = 'Test-Dev';
 end
 
 % Check it's a possible set
@@ -35,25 +33,11 @@ if ~ismember(subset,possible_sets)
     return 
 end
 
-% Check old and multiple or new and single
-if ~quiet
-    if ismember(subset,{'train-2016','val-2016','trainval-2016'}) && (db_sing_mult_obj()==1)
-        fprintf(2,'Warning! You are requesting a subset of 2016 but asking multiple-object ground truth. Are you sure that''s what you want?\n')
-    end
-    if ~ismember(subset,{'train-2016','val-2016','trainval-2016'}) && (db_sing_mult_obj()==0)
-        fprintf(2,'Warning! You are requesting a subset newer than 2016 but asking single-object ground truth. Are you sure that''s what you want?\n')
-    end
-end
-
 % Return the sets
-if strcmp(subset,'trainval-2016')
-    train2016 = db_seqs('train-2016',1);
-    val2016 = db_seqs('val-2016',1);
-    db_seq_list = sort([train2016;val2016(:)]);
-elseif strcmp(subset,'trainval-2017')
-    train2017 = db_seqs('train-2017',1);
-    val2017 = db_seqs('val-2017',1);
-    db_seq_list = sort([train2017;val2017(:)]);
+if strcmp(subset,'Train-Val')
+    train = db_seqs('Train');
+    val = db_seqs('Val');
+    db_seq_list = sort([train;val(:)]);
 else
     db_seq_list = read_list_from_file( subset );
 end

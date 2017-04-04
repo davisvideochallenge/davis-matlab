@@ -32,7 +32,7 @@ function db_set_properties(year, single_or_multiple_objects, im_size)
     if ~exist('im_size','var')
         im_size = '480p';
     end
-    
+  
     % Check values are correct
     if (year~=2016) && (year~=2017)
         error('year must be 2016 or 2017')
@@ -42,6 +42,14 @@ function db_set_properties(year, single_or_multiple_objects, im_size)
     end
     if (~strcmp(im_size,'480p')) && (~strcmp(im_size,'Full-Resolution'))
         error('im_size must be ''480p'' or ''Full-Resolution''')
+    end
+
+    % Check coherent values
+    if (year==2016) && (single_or_multiple_objects==1)
+        fprintf(2,'Warning! You are requesting a subset of 2016 but asking multiple-object ground truth. Are you sure that''s what you want?\n')
+    end
+    if (year==2017) && (single_or_multiple_objects==0)
+        fprintf(2,'Warning! You are requesting a subset newer than 2016 but asking single-object ground truth. Are you sure that''s what you want?\n')
     end
     
     % Display the values used

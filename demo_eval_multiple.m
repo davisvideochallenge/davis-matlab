@@ -14,12 +14,13 @@
 startup;
 
 % Set the properties of DAVIS:
+%  - 2017 is the year of the DAVIS edition
 %  - 1 means multiple objects, 0 single object
 %  - '480p' or 'Raw'
-db_set_properties(1,'480p');
+db_set_properties(2017, 1,'480p');
 
 % Get the ids of all sequences
-seq_ids = db_seqs('trainval-2017');
+seq_ids = db_seqs('Train-Val');
 
 % We try on the second sequence (bike-packing) that has two objects
 seq = seq_ids{2};
