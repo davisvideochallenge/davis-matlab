@@ -15,8 +15,8 @@
 % Get the parameters
 experiments_params();
 
-% Set of sequences (train, val, all)
-gt_set = 'all';
+% Set of sequences
+gt_set = 'Train-Val';
 
 %% Evaluate them or load pre-computed evaluation
 % Remove the preprocessing techniques

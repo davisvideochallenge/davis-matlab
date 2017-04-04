@@ -17,8 +17,8 @@
 experiments_params();
 
 % Which set of the ground truth use
-db_set_properties(0,'480p');
-gt_set = 'val-2016';
+db_set_properties(2016,0,'480p');
+gt_set = 'Val';
 [db_seq_list, stab_seqs]= db_seqs(gt_set);
 
 %% Evaluate them or load pre-computed evaluation

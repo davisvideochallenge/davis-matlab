@@ -6,5 +6,5 @@ function str_props = db_get_properties()
         str1 = 'multiple';
     end
     
-    str_props = [str1 '_' db_im_size];
+    str_props = [num2str(db_year) '-' str1 '-' db_im_size];
 end

@@ -16,10 +16,10 @@
 addpath(fullfile(db_matlab_root_dir,'db_util'));
 
 % Name of a result technique
-result_id = 'fcp';
+%result_id = 'fcp';
 
 % Get the ids of all sequences
-seq_ids = db_seqs('trainval-2016');
+seq_ids = db_seqs('Train-Val');
 
 % Sweep all sequences
 for s_id = 1:length(seq_ids)
@@ -39,7 +39,7 @@ for s_id = 1:length(seq_ids)
         annot  = db_read_annot(seq_ids{s_id}, frame_ids{f_id});
         
         % Read a result
-        result = db_read_result(seq_ids{s_id}, frame_ids{f_id}, result_id); 
+        %result = db_read_result(seq_ids{s_id}, frame_ids{f_id}, result_id); 
     end
     fprintf('\n');
 end
