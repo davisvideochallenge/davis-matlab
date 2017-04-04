@@ -19,7 +19,7 @@ addpath(fullfile(db_matlab_root_dir,'db_util'));
 %result_id = 'fcp';
 
 % Get the ids of all sequences
-seq_ids = db_seqs('Train-Val');
+seq_ids = db_seqs('TrainVal');
 
 % Sweep all sequences
 for s_id = 1:length(seq_ids)

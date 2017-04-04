@@ -7,7 +7,6 @@ end
 
 % Get the ids from folders or a set gt_set
 seq_ids = subdir(old_result_folder);
-% seq_ids = db_seqs('test-dev-2017');
 
 % Sweep all sequences
 for s_id = 1:length(seq_ids)

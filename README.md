@@ -43,9 +43,9 @@ Please cite `DAVIS 2017` and `DAVIS 2016` in your publications if it helps your 
 
     @article{Pont-Tuset_arXiv_2017,
       author    = {Jordi Pont-Tuset and Federico Perazzi and Sergi Caelles and
-                   Pablo Arbel\'aez and Alexander Sorkine-Hornung and Luc Van Gool},
+                   Pablo Arbel\'aez and Alexander Sorkine-Hornung and Luc {Van Gool}},
       title     = {The 2017 DAVIS Challenge on Video Object Segmentation},
-      journal   = {arXiv},
+      journal   = {arXiv:1704.00675},
       year      = {2017}
     }
 
@@ -53,7 +53,7 @@ Please cite `DAVIS 2017` and `DAVIS 2016` in your publications if it helps your 
       author    = {Federico Perazzi and
                    Jordi Pont-Tuset and
                    Brian McWilliams and
-                   Luc Van Gool and
+                   Luc {Van Gool} and
                    Markus Gross and
                    Alexander Sorkine-Hornung},
       title     = {A Benchmark Dataset and Evaluation Methodology for Video Object Segmentation},

@@ -16,7 +16,7 @@
 experiments_params();
 
 % Set of sequences
-gt_set = 'Train-Val';
+gt_set = 'TrainVal';
 
 %% Evaluate them or load pre-computed evaluation
 % Remove the preprocessing techniques

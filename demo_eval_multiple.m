@@ -20,7 +20,7 @@ startup;
 db_set_properties(2017, 1,'480p');
 
 % Get the ids of all sequences
-seq_ids = db_seqs('Train-Val');
+seq_ids = db_seqs('TrainVal');
 
 % We try on the second sequence (bike-packing) that has two objects
 seq = seq_ids{2};

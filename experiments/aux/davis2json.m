@@ -1,7 +1,7 @@
 function davis2json(meth_id, out_file, gt_set)
 
 if nargin==0
-    gt_set = 'val';
+    gt_set = 'Val';
     meth_id = 'osvos';
     res_folder = '.';
     out_file = fullfile(res_folder,[strrep(meth_id,'-',''), '_davis.json']);
