@@ -14,7 +14,7 @@
 function ids = read_list_from_file( gt_set )
     index_file = fullfile(db_root_dir,'ImageSets',num2str(db_year()),[gt_set '.txt']);
     if ~exist(index_file,'file')
-        error(['File ''' index_file ''' not found... Check the README'])
+        error(['File ''' index_file ''' not found... This should not happen, contact the authors'])
     end
     fileID = fopen(index_file);
     ids = textscan(fileID, '%s');

@@ -27,14 +27,14 @@ if ~ismember(subset,possible_sets)
     for ii=1:length(possible_sets)-1
         fprintf(2,'''%s'', ',possible_sets{ii})
     end
-    fprintf(2,'%s.\n',possible_sets{end});
+    fprintf(2,'''%s''.\n',possible_sets{end});
     db_seq_list = [];
     stab_seqs = [];
     return 
 end
 
 % Return the sets
-if strcmp(subset,'Train-Val')
+if strcmp(subset,'TrainVal')
     train = db_seqs('Train');
     val = db_seqs('Val');
     db_seq_list = sort([train;val(:)]);
