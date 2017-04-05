@@ -3,6 +3,7 @@ Introduction
 --------------
 Package containing the **Matlab** implementation of the code behind:
 [The 2017 DAVIS Video Object Segmentation Challenge](http://davischallenge.org).
+
 You can find the **Python** implementation [here](https://github.com/fperazzi/davis).
 
 
@@ -17,9 +18,9 @@ Code Installation
 
 Code Usage
 -----------------
-- The script `demo/demo_eval_multiple.m` contains a demo of how annotations and 
+- The script `demos/demo_eval_multiple.m` contains a demo of how annotations and 
   results are stored in the case of multiple objects.
-- The script `demo/demo_sweep.m` contains a demo of how the dataset images and
+- The script `demos/demo_sweep.m` contains a demo of how the dataset images and
   annotations are read (all functions in `db_util`).
 - The script `measures/eval_result.m` runs the evaluation for the selected measures
   on a certain subset of the dataset.
@@ -30,7 +31,7 @@ Code Usage
 
 Evaluate your technique
 -----------------
-- The script `demo/demo_eval_your_method.m` contains a demo of how to
+- The script `demos/demo_eval_your_method.m` contains a demo of how to
   evaluate your method (call `measures/eval_result.m`).
 - Add your results in the folder `$root_DAVIS\Results\Segmentations\480p`,
   as the provided precomputed results, in a folder `my_method`
