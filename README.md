@@ -17,9 +17,9 @@ Code Installation
 
 Code Usage
 -----------------
-- The script `demo_eval_multiple.m` contains a demo of how annotations and 
+- The script `demo/demo_eval_multiple.m` contains a demo of how annotations and 
   results are stored in the case of multiple objects.
-- The script `demo_sweep.m` contains a demo of how the dataset images and
+- The script `demo/demo_sweep.m` contains a demo of how the dataset images and
   annotations are read (all functions in `db_util`).
 - The script `measures/eval_result.m` runs the evaluation for the selected measures
   on a certain subset of the dataset.
@@ -30,6 +30,8 @@ Code Usage
 
 Evaluate your technique
 -----------------
+- The script `demo/demo_eval_your_method.m` contains a demo of how to
+  evaluate your method (call `measures/eval_result.m`).
 - Add your results in the folder `$root_DAVIS\Results\Segmentations\480p`,
   as the provided precomputed results, in a folder `my_method`
 - Run `measures/eval_result.m` on your technique: `eval_result('my_method',{'J','F','T'})`.
@@ -64,6 +66,6 @@ Please cite `DAVIS 2017` and `DAVIS 2016` in your publications if it helps your 
 
 Contacts
 ------------------
-- [Jordi Pont-Tuset](http://jponttuset.github.io/) - Matlab code
+- [Jordi Pont-Tuset](http://jponttuset.cat/) - Matlab code
 - [Federico Perazzi](https://graphics.ethz.ch/~perazzif/) - Python code
 

@@ -10,14 +10,15 @@
 % Please consider citing the paper if you use this code.
 % ------------------------------------------------------------------------
 % This function sets the properties for the DAVIS dataset:
-%
+%  - year: 2016 or 2017 [Default]
+%    Year of the DAVIS dataset
 %  - single_or_multiple_objects: 0 - Single Objects
 %                                1 - Multiple Objects [Default]
 %    Whether the ground truth is considered as a single object (original
 %    DAVIS) or as multiple objects (as of DAVIS challenge 2017)
 %
 %  - im_size: '480p' - Resolution of 480p [Default]
-%             'Raw'  - Raw resolution of the images (4k, 1080p, etc.)
+%             'Full-Resolution'  - Full resolution of the images (4k, 1080p, etc.)
 %    Resolution at which the images and annotations are used.
 % ------------------------------------------------------------------------
 function db_set_properties(year, single_or_multiple_objects, im_size)
