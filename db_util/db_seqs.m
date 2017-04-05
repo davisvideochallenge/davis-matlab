@@ -11,14 +11,14 @@
 % ------------------------------------------------------------------------
 function [db_seq_list, stab_seqs]= db_seqs(subset)
 
-possible_sets = {'Train','Val','TrainVal'};
+possible_sets = {'train','val','trainval'};
 if db_year()==2017
-    possible_sets{end+1} = 'Test-Dev';
+    possible_sets{end+1} = 'test-dev';
 end
 
 % Default value
 if ~exist('subset','var')
-    subset = 'Test-Dev';
+    subset = 'test-dev';
 end
 
 % Check it's a possible set
@@ -34,9 +34,9 @@ if ~ismember(subset,possible_sets)
 end
 
 % Return the sets
-if strcmp(subset,'TrainVal')
-    train = db_seqs('Train');
-    val = db_seqs('Val');
+if strcmp(subset,'trainval')
+    train = db_seqs('train');
+    val = db_seqs('val');
     db_seq_list = sort([train;val(:)]);
 else
     db_seq_list = read_list_from_file( subset );

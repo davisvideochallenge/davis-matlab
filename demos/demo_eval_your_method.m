@@ -16,7 +16,7 @@
 db_set_properties(2017,1,'480p')
 
 % Get the ids from a set gt_set
-gt_set = 'TrainVal';
+gt_set = 'trainval';
 seq_ids = db_seqs(gt_set);
 
 % Also possible to do it from a folder
