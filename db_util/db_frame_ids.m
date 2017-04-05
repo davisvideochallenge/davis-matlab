@@ -18,7 +18,7 @@ function frame_ids = db_frame_ids( seq_id )
     end
     
     if isempty(frame_ids)
-        error(['Error: Nothing found in ''' fullfile(db_im_dir,seq_id) '''. Did you download DAVIs and set the paths correctly?'])
+        error(['Error: Nothing found in ''' fullfile(db_im_dir,seq_id) '''. Did you download DAVIS and set the path in db_root_dir correctly?'])
     end
 end
 

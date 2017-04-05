@@ -12,7 +12,7 @@
 function annot = db_read_annot(seq_id, frame_id)
     annot_file = fullfile(db_annot_dir, seq_id, [frame_id '.png']);
     if ~exist(annot_file,'file')
-        error(['Error: ''' annot_file ''' not found, have you downloaded the DAVIS database from the project website?'])
+        error(['Error: ''' annot_file ''' not found, have you downloaded the DAVIS database from the project website and set the correct path in db_root_dir?'])
     end
     im_annot = imread(annot_file);
     assert(size(im_annot,3)==1)
