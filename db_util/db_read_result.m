@@ -12,7 +12,7 @@
 function result = db_read_result(seq_id, frame_id, result_id)
     res_file = fullfile(db_results_dir, result_id, seq_id, [frame_id '.png']);
     if ~exist(res_file,'file')
-        error(['Error: ''' res_file ''' not found, have you place your results in db_root_dir/Results/Segmentations/db_im_size/result_id?'])
+        error(['Error: ''' res_file ''' not found, have you placed your results in db_root_dir/Results/Segmentations/db_im_size/result_id?'])
     end
     result_im = imread(res_file);
     
