@@ -40,6 +40,12 @@ Evaluate your technique
 - Show your results as in `experiments\global_table.m`
 
 
+Helper functions
+-----------------
+Two helper scripts are found in the folder `helpers`:
+- `combine_multiple_pngs`: To combine different masks from each object into a single PNG.
+- `create_submission_zip`: To check and crate the ZIP file to submit to Codalab for the challenge.
+
 Citation
 --------------
 Please cite `DAVIS 2017` and `DAVIS 2016` in your publications if it helps your research:
