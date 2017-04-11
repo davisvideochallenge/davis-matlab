@@ -43,9 +43,13 @@ for s_id = 1:length(seq_ids)
         fprintf('.');
         
         % Read the result, each object in one directory
-        obj_ids = sort(subdir(fullfile(separate_masks_dir,seq_ids{s_id})));
+        obj_ids = subdir(fullfile(separate_masks_dir,seq_ids{s_id}));
+        for ii=1:length(obj_ids)
+            obj_ids{ii} = sprintf('%03d',str2double(obj_ids{ii}));
+        end
+        obj_ids = sort(obj_ids);
         if(length(obj_ids)~=str2double(obj_ids{end}))
-            fprintf(2,'Object IDs (subfolders) are not consecutive 1..N\n')
+            error(['Object IDs (subfolders) in ''' seq_ids{s_id} ''' are not consecutive 1..N'])
         end
         
         % Allocate and read all masks

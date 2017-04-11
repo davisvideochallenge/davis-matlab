@@ -9,8 +9,15 @@
 %   CVPR 2016
 % Please consider citing the paper if you use this code.
 % ------------------------------------------------------------------------
-function result = db_read_result(seq_id, frame_id, result_id)
-    res_file = fullfile(db_results_dir, result_id, seq_id, [frame_id '.png']);
+function result = db_read_result(seq_id_or_png_file, frame_id, result_id)
+    if nargin==1
+        res_file = seq_id_or_png_file;
+    elseif nargin==3
+        res_file = fullfile(db_results_dir, result_id, seq_id_or_png_file, [frame_id '.png']);
+    else
+        error('This function needs either 1 or 3 arguments')
+    end
+    
     if ~exist(res_file,'file')
         error(['Error: ''' res_file ''' not found, have you placed your results in db_root_dir/Results/Segmentations/db_im_size/result_id?'])
     end
