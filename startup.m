@@ -19,6 +19,7 @@ addpath(fullfile(db_matlab_root_dir,'measures'));
 addpath(fullfile(db_matlab_root_dir,'measures','aux'));
 addpath(fullfile(db_matlab_root_dir,'third-party','polycont','matlab'))
 addpath(fullfile(db_matlab_root_dir,'third-party','jsonlab'))
+addpath(fullfile(db_matlab_root_dir,'helpers'));
 
 % Check compiled files
 needed_files = {'measures/private/mex_match_dijkstra'};
