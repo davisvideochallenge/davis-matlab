@@ -13,10 +13,10 @@
 % Add paths
 addpath(db_matlab_root_dir);
 addpath(fullfile(db_matlab_root_dir,'db_util'));
-addpath(fullfile(db_matlab_root_dir,'db_util','aux'));
+addpath(fullfile(db_matlab_root_dir,'db_util','auxiliar'));
 addpath(genpath(fullfile(db_matlab_root_dir,'experiments')));
 addpath(fullfile(db_matlab_root_dir,'measures'));
-addpath(fullfile(db_matlab_root_dir,'measures','aux'));
+addpath(fullfile(db_matlab_root_dir,'measures','auxiliar'));
 addpath(fullfile(db_matlab_root_dir,'third-party','polycont','matlab'))
 addpath(fullfile(db_matlab_root_dir,'third-party','jsonlab'))
 addpath(fullfile(db_matlab_root_dir,'helpers'));
