@@ -35,7 +35,7 @@ end
 
 if ~isempty(to_recompute)
     for ii=1:length(to_recompute)
-        res_file = fullfile(eval_folder, [result_id '_' to_recompute{ii} '_' gt_set '_' db_get_properties '.mat']);
+        res_file = fullfile(eval_folder, [result_id '-' to_recompute{ii} '-' gt_set '-' db_get_properties '.mat']);
         disp(['RECOMPUTING: ' res_file])
     end
     
@@ -44,7 +44,7 @@ if ~isempty(to_recompute)
     
     % Separate each measure and save them independently
     for ii=1:length(to_recompute)
-        res_file = fullfile(eval_folder, [result_id '_' to_recompute{ii} '_' gt_set '_' db_get_properties '.mat']);
+        res_file = fullfile(eval_folder, [result_id '-' to_recompute{ii} '-' gt_set '-' db_get_properties '.mat']);
         disp(['SAVING: ' res_file])
 
         raw_ev = sel_eval.(to_recompute{ii});
