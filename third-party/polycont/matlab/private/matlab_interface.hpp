@@ -6,6 +6,10 @@
 #include <Eigen/Dense>
 #include <cpp/containers.hpp>
 
+#ifdef _MSC_VER
+    #include <iso646.h>
+#endif
+
 namespace PolyCont
 {
     ContContainer cont_from_matlab(const mxArray * mat_pointer)
