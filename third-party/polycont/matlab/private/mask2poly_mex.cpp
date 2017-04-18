@@ -8,8 +8,8 @@
 // mask2poly_mex(mask, border, simplify_tol)
 #include "mex.h"
 #include <Eigen/Dense>
-#include <cpp/mask2polycont.hpp>
 #include <matlab/private/matlab_interface.hpp>
+#include <cpp/mask2polycont.hpp>
 
 using namespace std;
 using namespace PolyCont;
