@@ -46,7 +46,9 @@ end
 % set requested
 if nargout>1
     % TODO
-    fprintf(2,'Warning: You requested the stable sequences but they are not updated\n')
+    if db_year()==2017
+        fprintf(2,'Warning: You requested the stable sequences for 2017 but they are not updated yet\n')
+    end
     
     % List of sequences where stability is not computed (occlusions, etc.)
     unstab_seqs = {'lucia', 'rollerblade', 'mallard-fly', 'bmx-bumps', 'goat', 'scooter-gray', 'bmx-trees', 'dance-twirl', 'motocross-jump', 'soccerball', 'breakdance', 'dog', 'horsejump-high', 'motorbike', 'breakdance-flare', 'dog-agility', 'horsejump-low', 'paragliding', 'drift-chicane', 'swing','parkour','tennis','libby'};
