@@ -30,7 +30,7 @@ results_id = 'your_method';
 combine_multiple_pngs('/path/to/my/results',seq_ids,results_id)
 
 % And now call eval result
-eval = eval_result(result_id, {'F','J'}, gt_set);
+eval = eval_result(results_id, {'F','J'}, gt_set);
 
 % Display results
 disp(['Mean J: ' num2str(mean(eval.J.mean))])
