@@ -23,13 +23,13 @@ for ii=1:length(seq_ids)
     
     % Print J
     fprintf(fid,'      "J" : [');
-    fprintf(fid,'"%0.3f", ', raw_ev.J{ii}(1:end-1));
-    fprintf(fid,'"%0.3f"],\n',raw_ev.J{ii}(end));
+    fprintf(fid,'"%0.3f", ', raw_ev.J(ii).raw(1:end-1));
+    fprintf(fid,'"%0.3f"],\n',raw_ev.J(ii).raw(end));
     
     % Print F
     fprintf(fid,'      "F" : [');
-    fprintf(fid,'"%0.3f", ', raw_ev.F{ii}(1:end-1));
-    fprintf(fid,'"%0.3f"]}',raw_ev.F{ii}(end));
+    fprintf(fid,'"%0.3f", ', raw_ev.F(ii).raw(1:end-1));
+    fprintf(fid,'"%0.3f"]}',raw_ev.F(ii).raw(end));
     
     if ii<length(seq_ids)
         fprintf(fid,',');
