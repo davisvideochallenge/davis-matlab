@@ -17,7 +17,8 @@
 experiments_params();
 
 % Which set of the ground truth use
-db_set_properties(2016,0,'480p');
+year = 2016;
+db_set_properties(year,0,'480p');
 gt_set = 'val';
 [db_seq_list, stab_seqs]= db_seqs(gt_set);
 
@@ -158,8 +159,8 @@ for ii=1:length(techniques)
     glob_eval.(id).Fdecay     = sprintf('%0.3f',mean(all_F.decay(ii,:)));
     glob_eval.(id).T          = sprintf('%0.3f',mean(all_T.mean(ii,stab_seqs)));
 end
-savejson('',glob_eval,['global_eval_' gt_set '.js']);
-% REMEMBER: Add 'var global_eval_val = '
+savejson('',glob_eval,['global_eval_' gt_set '_' num2str(year) '.js']);
+% REMEMBER: Add 'var global_eval_val_2016 = '
 
 
 %% Show all means
