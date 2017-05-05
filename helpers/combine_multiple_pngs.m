@@ -67,7 +67,7 @@ for s_id = 1:length(seq_ids)
         % And find the maximum at each pixel
         [~,marker] = max(res_mat,[],3);
         for ii=1:length(obj_ids)
-            result{ii} = (marker==ii)&(result{ii}>(max(result{ii})/2.));
+            result{ii} = (marker==ii)&(result{ii}>(max(result{ii}(:))/2.));
         end
         
         % Write a result
