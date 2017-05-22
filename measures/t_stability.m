@@ -37,7 +37,7 @@ function [T, raw_results] = t_stability( object, ground_truth, num_objects)
     
         T     = zeros(1,num_objects); 
         for ii=1:num_objects
-            [T(ii), raw_results(ii)] = t_stability_single(object{ii}, ground_truth{ii}); %#ok<AGROW>
+            [T(ii), raw_results{ii}] = t_stability_single(object{ii}, ground_truth{ii}); %#ok<AGROW>
         end
     else
         [T, raw_results] = t_stability_single( object, ground_truth);
