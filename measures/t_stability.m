@@ -28,16 +28,33 @@ function [T, raw_results] = t_stability( object, ground_truth, num_objects)
             num_objects = max(length(object),length(ground_truth));
         end
         for ii=length(object)+1:num_objects
-            object{ii} = false(size(ground_truth{1}));
+            if ~isempty(object)
+                object{ii} = false(size(object{1}));
+            elseif ~isempty(ground_truth)
+                object{ii} = false(size(ground_truth{1}));
+            else
+                object{ii} = [];
+            end
         end
         for ii=length(ground_truth)+1:num_objects
-            ground_truth{ii} = false(size(object{1}));
+            if ~isempty(ground_truth)
+                ground_truth{ii} = false(size(ground_truth{1}));
+            elseif ~isempty(object)
+                ground_truth{ii} = false(size(object{1}));
+            else
+                ground_truth{ii} = [];
+            end
         end
         assert(length(object)==length(ground_truth));
     
-        T     = zeros(1,num_objects); 
+        T = zeros(1,num_objects);
         for ii=1:num_objects
-            [T(ii), raw_results{ii}] = t_stability_single(object{ii}, ground_truth{ii}); %#ok<AGROW>
+            if (isempty(object{ii}))
+                T(ii) = NaN;
+                raw_results{ii} = []; %#ok<AGROW>
+            else
+                [T(ii), raw_results{ii}] = t_stability_single(object{ii}, ground_truth{ii}); %#ok<AGROW>
+            end
         end
     else
         [T, raw_results] = t_stability_single( object, ground_truth);
