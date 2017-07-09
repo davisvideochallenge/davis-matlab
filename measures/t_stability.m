@@ -28,10 +28,10 @@ function [T, raw_results] = t_stability( object, ground_truth, num_objects)
             num_objects = max(length(object),length(ground_truth));
         end
         for ii=length(object)+1:num_objects
-            object{ii} = false(size(object{1}));
+            object{ii} = false(size(ground_truth{1}));
         end
         for ii=length(ground_truth)+1:num_objects
-            ground_truth{ii} = false(size(ground_truth{1}));
+            ground_truth{ii} = false(size(object{1}));
         end
         assert(length(object)==length(ground_truth));
     
