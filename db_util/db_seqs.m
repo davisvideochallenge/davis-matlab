@@ -14,6 +14,7 @@ function [db_seq_list, stab_obj]= db_seqs(subset)
 possible_sets = {'train','val','trainval'};
 if db_year()==2017
     possible_sets{end+1} = 'test-dev';
+    possible_sets{end+1} = 'test-challenge';
 end
 
 % Default value
