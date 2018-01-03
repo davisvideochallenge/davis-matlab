@@ -65,10 +65,7 @@ for s_id = 1:length(seq_ids)
         end
         
         % Find the threshold to binarize (maximum of all objects)
-        th = max(result{1}(:))/2.;
-        for ii=2:length(obj_ids)
-            th = max(max(result{ii}(:))/2,th);
-        end
+        th = max(res_mat(:))/2.;
         
         % And find the maximum at each pixel
         [~,marker] = max(res_mat,[],3);
