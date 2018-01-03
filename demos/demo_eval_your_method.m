@@ -4,7 +4,7 @@
 % ------------------------------------------------------------------------ 
 % This file is part of the DAVIS package presented in:
 %   Jordi Pont-Tuset, Federico Perazzi, Sergi Caelles,
-%   Pablo Arbeláez, Alexander Sorkine-Hornung, Luc Van Gool
+%   Pablo Arbel?ez, Alexander Sorkine-Hornung, Luc Van Gool
 %   The 2017 DAVIS Video Object Segmentation Challenge
 %   arXiv 2017
 % Please consider citing the paper if you use this code.
