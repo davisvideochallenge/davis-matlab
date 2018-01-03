@@ -14,6 +14,7 @@
 % ------------------------------------------------------------------------
 
 % Get the parameters
+clear;
 experiments_params();
 
 % Which set of the ground truth use
@@ -159,8 +160,15 @@ for ii=1:length(techniques)
     glob_eval.(id).Fdecay     = sprintf('%0.3f',mean(all_F.decay(ii,:)));
     glob_eval.(id).T          = sprintf('%0.3f',mean(all_T.mean(ii,stab_seqs)));
 end
-savejson('',glob_eval,['global_eval_' gt_set '_' num2str(year) '.js']);
-% REMEMBER: Add 'var global_eval_val_2016 = '
+filename = ['global_eval_' gt_set '_' num2str(year) '.js'];
+savejson('',glob_eval,filename);
+
+% Add var ... =
+content = fileread(filename);
+content = ['var global_eval_' gt_set '_' num2str(year) ' = ', content];
+fid = fopen(filename,'w');
+fwrite(fid, content, 'char');
+fclose(fid);
 
 
 %% Show all means
